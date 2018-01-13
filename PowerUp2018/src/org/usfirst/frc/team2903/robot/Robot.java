@@ -49,10 +49,10 @@ public class Robot extends IterativeRobot {
 	SendableChooser<Command> autoChooser;
 	Command teleopCommand;
 
-	public static Joystick joyOp = new Joystick(0);
-	Button triggerKick = new JoystickButton(joyOp, 1);
+	public static Joystick opJoy = new Joystick(0);
+	Button triggerKick = new JoystickButton(opJoy, 1);
 
-	public static Joystick joy1 = new Joystick(1);
+	public static Joystick driveJoy = new Joystick(1);
 
 	public static Port lidarPort = I2C.Port.kOnboard;
 
