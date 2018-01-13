@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2903.robot.commands;
 
+import org.usfirst.frc.team2903.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -7,17 +9,39 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TeleOp extends Command {
 
+	public boolean isTANK = false;
+	public boolean isTogglePressed = false;
+	
     public TeleOp() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    	requires(Robot.driveSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.driveSubsystem.setTeleopMode();
+    	//Robot.gyroSubsystem.reset();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
+    	if (Robot.driveJoy.getRawButton(9) || Robot.driveJoyExtra.getRawButton(9)) {
+    		if(isTogglePressed) return;
+			Robot.driveSubsystem.changeToHighGear();
+			isTogglePressed = true;
+    	} else {
+    		isTogglePressed = false;
+    	}
+    	
+    	if(isTANK) {
+    		double leftSpeed = Robot.driveJoy.getY();
+    		double rightSpeed = Robot.driveJoyExtra.getY();
+    		Robot.driveSubsystem.tankDrive(leftSpeed, rightSpeed);
+    	} else {
+        	double forward = Robot.driveJoy.getY();
+        	double turn = Robot.driveJoy.getX();
+        	Robot.driveSubsystem.arcadeDrive(forward, turn);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -32,5 +56,6 @@ public class TeleOp extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	//no
     }
 }
