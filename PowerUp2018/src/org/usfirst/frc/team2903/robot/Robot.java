@@ -68,8 +68,7 @@ public class Robot extends IterativeRobot {
 		pneumaticsSubsystem = new Pneumatics2903();
 
 		driveSubsystem = new Drive2903();
-		Gyro2903.GYRO_TYPE gyroType = Gyro2903.GYRO_TYPE.SPI;
-		gyroSubsystem = new Gyro2903(gyroType);
+		gyroSubsystem = new Gyro2903();
 		climberSubsystem = new Climber2903();
 
 		camera = null;//new Vision2903("10.29.3.56"); 
