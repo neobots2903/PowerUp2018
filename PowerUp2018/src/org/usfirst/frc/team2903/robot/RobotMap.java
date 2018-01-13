@@ -8,4 +8,5 @@ public static final int RightBottomMotor = 0;
 public static final int AnalogGyro = 0;
 public static final int highGearShiftSol = 0;
 public static final int lowGearShiftSol = 0;
+public static final int WinchMotor = 0;
 }

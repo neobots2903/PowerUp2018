@@ -1,18 +1,40 @@
 package org.usfirst.frc.team2903.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team2903.robot.RobotMap;
 
-/**
- *
- */
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 public class Climber2903 extends Subsystem {
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+	// motor
+	static WPI_TalonSRX ClimberMotor;
 
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+	public Climber2903() {
+		// instantiate the talon motor controllers
+		ClimberMotor = new WPI_TalonSRX(RobotMap.WinchMotor);
+
+		// enable the motors
+		//ClimberMotor.enable();
+	}
+
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void LiftOff() {
+		// Pick balls up
+		ClimberMotor.set(-1);
+	}
+
+	public void Fall() {
+		// spit balls out
+		ClimberMotor.set(1);
+	}
+
+	public void StopLift() {
+		ClimberMotor.set(0);
+	}
 }
-
