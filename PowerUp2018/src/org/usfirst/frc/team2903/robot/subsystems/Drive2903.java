@@ -17,6 +17,12 @@ public class Drive2903 extends Subsystem {
 	WPI_TalonSRX leftRearMotor;
 	WPI_TalonSRX rightFrontMotor;
 	WPI_TalonSRX rightRearMotor;
+	
+	//temporary Talon test
+	WPI_TalonSRX TalonTester1;
+	WPI_TalonSRX TalonTester2;
+	WPI_TalonSRX TalonTester3;
+	WPI_TalonSRX TalonTester4;
 
 	static final double PI = 3.14159;
 	static final int CODES_PER_MOTOR_REV = 256; // eg: Grayhill 61R256
@@ -59,11 +65,23 @@ public class Drive2903 extends Subsystem {
 		leftRearMotor = new WPI_TalonSRX(RobotMap.LeftBottomMotor);
 		rightFrontMotor = new WPI_TalonSRX(RobotMap.RightTopMotor);
 		rightRearMotor = new WPI_TalonSRX(RobotMap.RightBottomMotor);
+		
+		//temporary Talon test
+		TalonTester1 = new WPI_TalonSRX(RobotMap.TalonTester1);
+		TalonTester2 = new WPI_TalonSRX(RobotMap.TalonTester2);
+		TalonTester3 = new WPI_TalonSRX(RobotMap.TalonTester3);
+		TalonTester4 = new WPI_TalonSRX(RobotMap.TalonTester4);
 
 		rightFrontMotor.setInverted(false);
 		rightRearMotor.setInverted(false);
 		leftFrontMotor.setInverted(false);
 		leftRearMotor.setInverted(false);
+		
+		//temporary Talon test
+		TalonTester1.setInverted(false);
+		TalonTester2.setInverted(false);
+		TalonTester3.setInverted(false);
+		TalonTester4.setInverted(false);
 
 		robotDrive = new DifferentialDrive(leftFrontMotor, rightFrontMotor);
 		
@@ -164,11 +182,12 @@ public class Drive2903 extends Subsystem {
 		Robot.driveSubsystem.rightRearMotor.set(ControlMode.Follower,0);
 		Robot.driveSubsystem.leftRearMotor.set(ControlMode.Follower,0);	
 		
-		// have the motors follow rightFrontMotor
+		// have the motors follow the front motors
 		rightFrontMotor.set(0);
 		leftFrontMotor.set(0);
 		leftRearMotor.set(leftFrontMotor.getDeviceID());
 		rightRearMotor.set(rightFrontMotor.getDeviceID());
+		
 		
 		//Reset the encoder to zero as its current position
 		rightFrontMotor.setSelectedSensorPosition(0, pidIdx, timeoutMs);
@@ -269,11 +288,24 @@ public class Drive2903 extends Subsystem {
 		Robot.driveSubsystem.leftFrontMotor.set(ControlMode.PercentOutput,0);
 		Robot.driveSubsystem.rightRearMotor.set(ControlMode.PercentOutput,0);
 		Robot.driveSubsystem.leftRearMotor.set(ControlMode.PercentOutput,0);
+		
+		//temporary Talon test
+				Robot.driveSubsystem.TalonTester1.set(ControlMode.Follower,0);	
+				Robot.driveSubsystem.TalonTester2.set(ControlMode.Follower,0);	
+				Robot.driveSubsystem.TalonTester3.set(ControlMode.Follower,0);	
+				Robot.driveSubsystem.TalonTester4.set(ControlMode.Follower,0);	
+				
 
 		leftRearMotor.set(0);
 		rightRearMotor.set(0);
 		leftFrontMotor.set(0);
 		rightFrontMotor.set(0);
+		
+		//temporary Talon test
+				TalonTester1.set(leftRearMotor.getDeviceID());
+				TalonTester2.set(rightRearMotor.getDeviceID());
+				TalonTester3.set(leftFrontMotor.getDeviceID());
+				TalonTester4.set(rightFrontMotor.getDeviceID());
 	}
 
 	public void setPosition(long distanceToDrive) {
