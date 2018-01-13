@@ -53,6 +53,7 @@ public class Robot extends IterativeRobot {
 	Button triggerKick = new JoystickButton(opJoy, 1);
 
 	public static Joystick driveJoy = new Joystick(1);
+	public static Joystick driveJoyExtra = new Joystick(2);	//purely for tank drive
 
 	public static Port lidarPort = I2C.Port.kOnboard;
 
