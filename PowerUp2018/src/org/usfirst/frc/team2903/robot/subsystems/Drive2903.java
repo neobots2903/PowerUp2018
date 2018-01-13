@@ -22,7 +22,7 @@ public class Drive2903 extends Subsystem {
 	static final int CODES_PER_MOTOR_REV = 256; // eg: Grayhill 61R256
 	static final double COUNTS_PER_MOTOR_REV = 1024; // quadrature encoder
 	static final double DRIVE_GEAR_REDUCTION = (30.0/54.0); // This is < 1.0 if geared up
-	static final double WHEEL_DIAMETER_INCHES = 4.0; // For figuring circumference
+	static final double WHEEL_DIAMETER_INCHES = 6.0; // For figuring circumference
 	
 	static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * PI);
 	static final double CM_PER_INCH = 2.54;
