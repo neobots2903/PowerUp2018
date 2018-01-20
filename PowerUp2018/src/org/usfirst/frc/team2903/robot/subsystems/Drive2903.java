@@ -50,12 +50,6 @@ public class Drive2903 extends Subsystem {
 		m_Right = new SpeedControllerGroup(rightFrontMotor, rightRearMotor);
 		
 		robotDrive = new DifferentialDrive(m_Left, m_Right);
-		
-		//rightFrontMotor.setSafetyEnabled(false);
-		//leftFrontMotor.setSafetyEnabled(false);
-		//rightRearMotor.setSafetyEnabled(false);
-		//leftRearMotor.setSafetyEnabled(false);
-
 	}
 
 	public void arcadeDrive(double forward, double turn) {
@@ -69,8 +63,15 @@ public class Drive2903 extends Subsystem {
 	public void setTeleopMode() {
 		Robot.driveSubsystem.rightFrontMotor.set(ControlMode.PercentOutput,1);
 		Robot.driveSubsystem.leftFrontMotor.set(ControlMode.PercentOutput,0);
-		Robot.driveSubsystem.rightRearMotor.set(ControlMode.Follower,31);
-		Robot.driveSubsystem.leftRearMotor.set(ControlMode.Follower,33);
+		Robot.driveSubsystem.rightRearMotor.set(ControlMode.Follower,RobotMap.RightTopMotor);
+		Robot.driveSubsystem.leftRearMotor.set(ControlMode.Follower,RobotMap.LeftTopMotor);
+	}
+	
+	public void setAutoMode() {
+		Robot.driveSubsystem.rightFrontMotor.set(ControlMode.Position,1);
+		Robot.driveSubsystem.leftFrontMotor.set(ControlMode.Position,0);
+		Robot.driveSubsystem.rightRearMotor.set(ControlMode.Follower,RobotMap.RightTopMotor);
+		Robot.driveSubsystem.leftRearMotor.set(ControlMode.Follower,RobotMap.LeftTopMotor);
 	}
 		
 	// Low to High gear
