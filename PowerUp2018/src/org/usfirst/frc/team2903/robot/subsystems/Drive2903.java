@@ -71,46 +71,9 @@ public class Drive2903 extends Subsystem {
 		m_Left = new SpeedControllerGroup(leftFrontMotor, leftRearMotor);
 		m_Right = new SpeedControllerGroup(rightFrontMotor, rightRearMotor);
 		
-		
-		//temporary Talon test
-//		TalonTester1 = new WPI_TalonSRX(RobotMap.TalonTester1);
-//		TalonTester2 = new WPI_TalonSRX(RobotMap.TalonTester2);
-//		TalonTester3 = new WPI_TalonSRX(RobotMap.TalonTester3);
-//		TalonTester4 = new WPI_TalonSRX(RobotMap.TalonTester4);
-
-//		rightFrontMotor.setInverted(false);
-//		rightRearMotor.setInverted(false);
-//		leftFrontMotor.setInverted(false);
-//		leftRearMotor.setInverted(false);
-		
-		//temporary Talon test
-//		TalonTester1.setInverted(false);
-//		TalonTester2.setInverted(false);
-//		TalonTester3.setInverted(false);
-//		TalonTester4.setInverted(false);
 
 		robotDrive = new DifferentialDrive(m_Left, m_Right);
-		
-		// talon position set up 
-//		absolutePosition = leftFrontMotor.getSensorCollection().getPulseWidthPosition() & 0xFFF;
-//		leftFrontMotor.getSensorCollection().setQuadraturePosition(absolutePosition,10);
-//		absolutePosition = rightFrontMotor.getSensorCollection().getPulseWidthPosition() & 0xFFF;
-//		rightFrontMotor.getSensorCollection().setQuadraturePosition(absolutePosition,10);
-		
-//		
-//		// disable timeout safety on drives
-//		rightFrontMotor.setSafetyEnabled(false);
-//		rightFrontMotor.set(0);
-//		leftFrontMotor.setSafetyEnabled(false);
-//		leftFrontMotor.set(0);
 
-		// configure the encoders
-//		rightFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, pidIdx, timeoutMs);
-//		rightFrontMotor.setInverted(true);
-//		//rightFrontMotor.configEncoderCodesPerRev(256);
-//		leftFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, pidIdx, timeoutMs);
-//		leftFrontMotor.setInverted(false);
-		//leftFrontMotor.configEncoderCodesPerRev(256);
 
 //		// configure the output
 		rightFrontMotor.configPeakOutputForward(+12, -12);
@@ -121,10 +84,12 @@ public class Drive2903 extends Subsystem {
 		rightRearMotor.configPeakOutputReverse(+12, -12);
 		leftRearMotor.configPeakOutputForward(+12, -12);
 		leftRearMotor.configPeakOutputReverse(+12, -12);
+		
+		rightFrontMotor.setSafetyEnabled(false);
+		leftFrontMotor.setSafetyEnabled(false);
+		rightRearMotor.setSafetyEnabled(false);
+		leftRearMotor.setSafetyEnabled(false);
 
-		// Initialize the raw counts
-//		lastRightRawCount = 0;
-//		lastLeftRawCount = 0;
 	}
 
 	/**
