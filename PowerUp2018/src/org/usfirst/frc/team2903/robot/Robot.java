@@ -55,21 +55,16 @@ public class Robot extends IterativeRobot {
 	public static Joystick driveJoy = new Joystick(1);
 	public static Joystick driveJoyExtra = new Joystick(2);	//purely for tank drive
 
-	public static Port lidarPort = I2C.Port.kOnboard;
-
-	public static final int IMG_WIDTH = 640;
-	public static final int IMG_HEIGHT = 480;
-
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-
+		
+//
 		pneumaticsSubsystem = new Pneumatics2903();
-
 		driveSubsystem = new Drive2903();
-		gyroSubsystem = new Gyro2903();
+    	gyroSubsystem = new Gyro2903();
 		climberSubsystem = new Climber2903();
 
 		camera = null;//new Vision2903("10.29.3.56"); 
@@ -92,7 +87,8 @@ public class Robot extends IterativeRobot {
 			autoChooser.addDefault("MinimalAutonomous", new MinimalAutonomous());
 			SmartDashboard.putData("AutoChooser", autoChooser);
 
-		teleopCommand = new TeleOp();
+      		teleopCommand = new TeleOp();
+			//teleopCommand = null;
 	}
 
 	public void disabledPeriodic() {
@@ -100,9 +96,9 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
-		// schedule the autonomous command (example)
-		autonomousCommand = (Command) autoChooser.getSelected();
-		autonomousCommand.start();
+//		// schedule the autonomous command (example)
+//		autonomousCommand = (Command) autoChooser.getSelected();
+//		autonomousCommand.start();
 	}
 
 	/**
@@ -117,8 +113,8 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
+//		if (autonomousCommand != null)
+//			autonomousCommand.cancel();
 	}
 
 	/**
