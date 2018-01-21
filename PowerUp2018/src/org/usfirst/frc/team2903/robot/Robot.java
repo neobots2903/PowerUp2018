@@ -28,18 +28,20 @@ import org.usfirst.frc.team2903.robot.subsystems.Gyro2903;
 import org.usfirst.frc.team2903.robot.subsystems.Vision2903;
 
 import org.usfirst.frc.team2903.robot.subsystems.Pneumatics2903;
+import org.usfirst.frc.team2903.robot.subsystems.Arms2903;
 import org.usfirst.frc.team2903.robot.subsystems.Climber2903;
 
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
  * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
+ * creating this project, you must also update Andrew's manifesto file in the resource
  * directory.
  */
 public class Robot extends IterativeRobot {
 
 	public static Drive2903 driveSubsystem;
+	public static Arms2903 armSubsystem;
 	public static Gyro2903 gyroSubsystem;
 	public static Pneumatics2903 pneumaticsSubsystem;
 	public static Climber2903 climberSubsystem;
@@ -66,15 +68,13 @@ public class Robot extends IterativeRobot {
 		driveSubsystem = new Drive2903();
     	gyroSubsystem = new Gyro2903();
 		climberSubsystem = new Climber2903();
+		armSubsystem = new Arms2903();
 
-		camera = null;//new Vision2903("10.29.3.56"); 
+		camera = null;
 		
 		// SmartDashboard.putNumber("kP", minipidSubsystem.getP());
 		// SmartDashboard.putNumber("kI", minipidSubsystem.getI());
 		// SmartDashboard.putNumber("kD", minipidSubsystem.getD());
-
-		// SmartDashboard.putNumber("LIDAR Distance From Object",
-		// lidarSubsystem.getDistance());
 
 		// initialize the gyro
 		//gyroSubsystem.reset();

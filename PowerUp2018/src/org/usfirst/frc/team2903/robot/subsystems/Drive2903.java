@@ -11,32 +11,26 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Drive2903 extends Subsystem {
-
+public class Drive2903 extends Subsystem 
+{
 	WPI_TalonSRX leftFrontMotor;
 	WPI_TalonSRX leftRearMotor;
 	WPI_TalonSRX rightFrontMotor;
 	WPI_TalonSRX rightRearMotor;
 	SpeedControllerGroup m_Left;
 	SpeedControllerGroup m_Right;
-	
-	static final int pidIdx = 0;
-	static final int slotIdx = 0;
-	static final int timeoutMs = 10;
 
 	public DifferentialDrive robotDrive;
 
-	public Drive2903() {
-
-		int absolutePosition;
-
+	public Drive2903()
+	{
 		// instantiate the talons
 		leftFrontMotor = new WPI_TalonSRX(RobotMap.LeftTopMotor);
 		leftRearMotor = new WPI_TalonSRX(RobotMap.LeftBottomMotor);
 		rightFrontMotor = new WPI_TalonSRX(RobotMap.RightTopMotor);
 		rightRearMotor = new WPI_TalonSRX(RobotMap.RightBottomMotor);
 		
-//		// configure the output
+		// configure the output
 		rightFrontMotor.configPeakOutputForward(1, 0);
 		rightFrontMotor.configPeakOutputReverse(-1, 0);
 		leftFrontMotor.configPeakOutputForward(1, 0);
@@ -52,22 +46,27 @@ public class Drive2903 extends Subsystem {
 		robotDrive = new DifferentialDrive(m_Left, m_Right);
 	}
 
-	public void arcadeDrive(double forward, double turn) {
+	public void arcadeDrive(double forward, double turn) 
+	{
 		robotDrive.arcadeDrive(forward, -(turn));
 	}
 
 	@Override
-	protected void initDefaultCommand() {
+	protected void initDefaultCommand() 
+	{
+		
 	}
 
-	public void setTeleopMode() {
+	public void setTeleopMode() 
+	{
 		Robot.driveSubsystem.rightFrontMotor.set(ControlMode.PercentOutput,1);
 		Robot.driveSubsystem.leftFrontMotor.set(ControlMode.PercentOutput,0);
 		Robot.driveSubsystem.rightRearMotor.set(ControlMode.Follower,RobotMap.RightTopMotor);
 		Robot.driveSubsystem.leftRearMotor.set(ControlMode.Follower,RobotMap.LeftTopMotor);
 	}
 	
-	public void setAutoMode() {
+	public void setAutoMode()
+	{
 		Robot.driveSubsystem.rightFrontMotor.set(ControlMode.Position,1);
 		Robot.driveSubsystem.leftFrontMotor.set(ControlMode.Position,0);
 		Robot.driveSubsystem.rightRearMotor.set(ControlMode.Follower,RobotMap.RightTopMotor);
@@ -75,16 +74,20 @@ public class Drive2903 extends Subsystem {
 	}
 		
 	// Low to High gear
-	public void changeToHighGear() {
+	public void changeToHighGear() 
+	{
 		Robot.pneumaticsSubsystem.highGear();
 	}
 
 	// high to low gear
-	public void changeToLowGear() {
+	public void changeToLowGear() 
+	{
 		Robot.pneumaticsSubsystem.lowGear();
 	}
 
-	public void driveReset() {
+	public void driveReset()
+	{
+		
 	}
 
 }

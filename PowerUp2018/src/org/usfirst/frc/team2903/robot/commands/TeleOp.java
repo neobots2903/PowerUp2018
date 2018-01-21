@@ -47,6 +47,16 @@ public class TeleOp extends Command {
         	SmartDashboard.putNumber("forward", forward);
         	SmartDashboard.putNumber("turn", turn);
         	Robot.driveSubsystem.arcadeDrive(forward, turn);
+        	
+        	if (Robot.driveJoy.getRawButton(7)) {
+        		Robot.armSubsystem.throwCube();
+        	} 
+        	else if (Robot.driveJoy.getRawButton(8)) {
+        		Robot.armSubsystem.grabCube();
+        	} 
+        	else {
+        		Robot.armSubsystem.stopArms();
+        	}
     //	}
     }
 
