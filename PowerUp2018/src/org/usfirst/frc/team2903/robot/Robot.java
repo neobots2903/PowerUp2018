@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team2903.robot.commands.DriveSquare;
 import org.usfirst.frc.team2903.robot.commands.MinimalAutonomous;
 import org.usfirst.frc.team2903.robot.commands.TeleOp;
 import org.usfirst.frc.team2903.robot.subsystems.Drive2903;
@@ -77,14 +78,14 @@ public class Robot extends IterativeRobot {
 		// SmartDashboard.putNumber("kD", minipidSubsystem.getD());
 
 		// initialize the gyro
-		//gyroSubsystem.reset();
-		//gyroSubsystem.Calibrate();
+		gyroSubsystem.reset();
+		gyroSubsystem.calibrate();
 
 		autoChooser = new SendableChooser<Command>();
 			//autoChooser.addObject("RightGear", new RightGear());
 			//autoChooser.addDefault("MiddleGear", new MiddleGear());
 			//autoChooser.addObject("LeftGear", new LeftGear());
-			autoChooser.addDefault("MinimalAutonomous", new MinimalAutonomous());
+			autoChooser.addDefault("DriveSquare", new DriveSquare());
 			SmartDashboard.putData("AutoChooser", autoChooser);
 
       		teleopCommand = new TeleOp();
@@ -97,8 +98,8 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 //		// schedule the autonomous command (example)
-//		autonomousCommand = (Command) autoChooser.getSelected();
-//		autonomousCommand.start();
+		autonomousCommand = (Command) autoChooser.getSelected();
+		autonomousCommand.start();
 	}
 
 	/**

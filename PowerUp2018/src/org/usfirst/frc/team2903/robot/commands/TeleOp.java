@@ -2,6 +2,7 @@ package org.usfirst.frc.team2903.robot.commands;
 
 import org.usfirst.frc.team2903.robot.Robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -44,14 +45,24 @@ public class TeleOp extends Command {
         	double forward = Robot.driveJoy.getY();
         	double turn = Robot.driveJoy.getX();
         	
-        	SmartDashboard.putNumber("forward", forward);
-        	SmartDashboard.putNumber("turn", turn);
-        	Robot.driveSubsystem.arcadeDrive(forward, turn);
+        	//double leftSide = Robot.opJoy.getY();
+        	//double joyForward = Robot.opJoy.getRawAxis(5);
+        	double joyForward = Robot.opJoy.getRawAxis(2) - Robot.opJoy.getRawAxis(3);
+        	double joyTurn = Robot.opJoy.getRawAxis(0);
+        	if (joyForward > 0) joyTurn = -joyTurn;
         	
-        	if (Robot.driveJoy.getRawButton(7)) {
+        	SmartDashboard.putNumber("forward", -forward);
+        	SmartDashboard.putNumber("turn", turn);
+        	SmartDashboard.putNumber("Gyro", Robot.gyroSubsystem.gyroPosition());
+        	Robot.driveSubsystem.arcadeDrive(joyForward, joyTurn);
+        	//SmartDashboard.putNumber("left", leftSide);
+        	//SmartDashboard.putNumber("right", rightSide);
+        	//Robot.driveSubsystem.tankDrive(leftSide, rightSide);
+        	
+        	if (Robot.opJoy.getRawButton(5)) {
         		Robot.armSubsystem.throwCube();
         	} 
-        	else if (Robot.driveJoy.getRawButton(8)) {
+        	else if (Robot.opJoy.getRawButton(6)) {
         		Robot.armSubsystem.grabCube();
         	} 
         	else {

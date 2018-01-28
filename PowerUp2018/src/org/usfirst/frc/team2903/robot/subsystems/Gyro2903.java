@@ -13,26 +13,25 @@ import edu.wpi.first.wpilibj.SPI;
  */
 public class Gyro2903 extends Subsystem {
 
-	public ADXRS450_Gyro spi;
+	public ADXRS450_Gyro spiro;
 	
 	public double gyroAngle;
 	
 	public Gyro2903() {
-		spi = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+		spiro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
 	}
 	
 	public double gyroPosition() {
-		spi.getAngle();
-		gyroAngle = gyroAngle % 360;
+		gyroAngle = spiro.getAngle();
 		return gyroAngle;
 	}
 	
 	public void calibrate() {
-		spi.calibrate();
+		spiro.calibrate();
 	}
 	
 	public void reset() {
-		spi.reset();
+		spiro.reset();
 	}
 	
     public void initDefaultCommand() {

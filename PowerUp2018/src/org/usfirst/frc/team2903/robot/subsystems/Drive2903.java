@@ -87,7 +87,10 @@ public class Drive2903 extends Subsystem
 
 	public void driveReset()
 	{
-		
+	}
+
+	public void tankDrive(double leftSpeed, double rightSpeed) {
+		robotDrive.tankDrive(leftSpeed, rightSpeed);
 	}
 
 }
