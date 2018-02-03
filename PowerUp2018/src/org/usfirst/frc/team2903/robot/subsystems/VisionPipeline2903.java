@@ -25,11 +25,10 @@ import org.opencv.objdetect.*;
 *
 * @author GRIP
 */
-public class GearPegPipeline2903 implements VisionPipeline {
+public class VisionPipeline2903 implements VisionPipeline {
 
 	//Outputs
 	private Mat hsvThresholdOutput = new Mat();
-	private Mat cvErodeOutput = new Mat();
 	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
 	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 
@@ -43,34 +42,25 @@ public class GearPegPipeline2903 implements VisionPipeline {
 	@Override	public void process(Mat source0) {
 		// Step HSV_Threshold0:
 		Mat hsvThresholdInput = source0;
-		double[] hsvThresholdHue = {76.07913669064747, 95.52901023890786};
-		double[] hsvThresholdSaturation = {29.81115107913669, 163.61774744027304};
+		double[] hsvThresholdHue = {55.03597122302158, 90.92150170648463};
+		double[] hsvThresholdSaturation = {55.03597122302158, 255.0};
 		double[] hsvThresholdValue = {255.0, 255.0};
 		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
-		// Step CV_erode0:
-		Mat cvErodeSrc = hsvThresholdOutput;
-		Mat cvErodeKernel = new Mat();
-		Point cvErodeAnchor = new Point(-1, -1);
-		double cvErodeIterations = 1;
-		int cvErodeBordertype = Core.BORDER_CONSTANT;
-		Scalar cvErodeBordervalue = new Scalar(-1);
-		cvErode(cvErodeSrc, cvErodeKernel, cvErodeAnchor, cvErodeIterations, cvErodeBordertype, cvErodeBordervalue, cvErodeOutput);
-
 		// Step Find_Contours0:
-		Mat findContoursInput = cvErodeOutput;
+		Mat findContoursInput = hsvThresholdOutput;
 		boolean findContoursExternalOnly = false;
 		findContours(findContoursInput, findContoursExternalOnly, findContoursOutput);
 
 		// Step Filter_Contours0:
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-		double filterContoursMinArea = 350.0;
-		double filterContoursMinPerimeter = 0;
-		double filterContoursMinWidth = 0;
-		double filterContoursMaxWidth = 1000.0;
-		double filterContoursMinHeight = 0;
+		double filterContoursMinArea = 0.0;
+		double filterContoursMinPerimeter = 0.0;
+		double filterContoursMinWidth = 9.0;
+		double filterContoursMaxWidth = 10000.0;
+		double filterContoursMinHeight = 18.0;
 		double filterContoursMaxHeight = 1000;
-		double[] filterContoursSolidity = {0.0, 100.0};
+		double[] filterContoursSolidity = {60.251798561151084, 100};
 		double filterContoursMaxVertices = 1000000;
 		double filterContoursMinVertices = 0;
 		double filterContoursMinRatio = 0;
@@ -85,14 +75,6 @@ public class GearPegPipeline2903 implements VisionPipeline {
 	 */
 	public Mat hsvThresholdOutput() {
 		return hsvThresholdOutput;
-	}
-
-	/**
-	 * This method is a generated getter for the output of a CV_erode.
-	 * @return Mat output from CV_erode.
-	 */
-	public Mat cvErodeOutput() {
-		return cvErodeOutput;
 	}
 
 	/**
@@ -126,30 +108,6 @@ public class GearPegPipeline2903 implements VisionPipeline {
 		Imgproc.cvtColor(input, out, Imgproc.COLOR_BGR2HSV);
 		Core.inRange(out, new Scalar(hue[0], sat[0], val[0]),
 			new Scalar(hue[1], sat[1], val[1]), out);
-	}
-
-	/**
-	 * Expands area of lower value in an image.
-	 * @param src the Image to erode.
-	 * @param kernel the kernel for erosion.
-	 * @param anchor the center of the kernel.
-	 * @param iterations the number of times to perform the erosion.
-	 * @param borderType pixel extrapolation method.
-	 * @param borderValue value to be used for a constant border.
-	 * @param dst Output Image.
-	 */
-	private void cvErode(Mat src, Mat kernel, Point anchor, double iterations,
-		int borderType, Scalar borderValue, Mat dst) {
-		if (kernel == null) {
-			kernel = new Mat();
-		}
-		if (anchor == null) {
-			anchor = new Point(-1,-1);
-		}
-		if (borderValue == null) {
-			borderValue = new Scalar(-1);
-		}
-		Imgproc.erode(src, dst, kernel, anchor, (int)iterations, borderType, borderValue);
 	}
 
 	/**

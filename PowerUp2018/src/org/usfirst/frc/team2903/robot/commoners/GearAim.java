@@ -3,7 +3,7 @@ package org.usfirst.frc.team2903.robot.commoners;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team2903.robot.Robot;
-import org.usfirst.frc.team2903.robot.subsystems.GearPegPipeline2903;
+import org.usfirst.frc.team2903.robot.subsystems.VisionPipeline2903;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.command.Command;
@@ -14,12 +14,12 @@ public class GearAim extends Command {
 
 	private double centerX = 0.0;
 	private double width = 0.0;
-	public static final double maxWidth = 66.0;
+	public static final double maxWidth = 60.0;
 	public static final int error = 5;
 	public static final int maxError = 60;
-	public static final int errorMulti = 15;
-	public static final double maxSpeed = 0.65;
-	public static final double minSpeed = 0.45;
+	public static final int errorMulti = 18;
+	public static final double maxSpeed = 0.55;
+	public static final double minSpeed = 0.44;
 	public static final double minForwardSpeed = 0.5;
 	public static final double maxForwardSpeed = 0.8;
 
@@ -38,7 +38,7 @@ public class GearAim extends Command {
 		
 		camera.setResolution(Robot.IMG_WIDTH, Robot.IMG_HEIGHT);
 	
-		visionThread = new VisionThread(camera, new GearPegPipeline2903(), pipeline -> {
+		visionThread = new VisionThread(camera, new VisionPipeline2903(), pipeline -> {
 				if (!pipeline.filterContoursOutput().isEmpty()) {
 					Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
 					synchronized (imgLock) {
@@ -109,6 +109,7 @@ public class GearAim extends Command {
 					double forwardSpeed = maxWidth / localWidth;
 					if (forwardSpeed < minForwardSpeed) { forwardSpeed = minForwardSpeed; }
 					else if (forwardSpeed > maxForwardSpeed) { forwardSpeed = maxForwardSpeed; }
+					SmartDashboard.putNumber("forwardSpeed ", forwardSpeed);
 					Robot.driveSubsystem.arcadeDrive(-forwardSpeed, turn);
 					return false;
 				}
