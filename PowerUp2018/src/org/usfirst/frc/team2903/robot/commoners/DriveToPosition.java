@@ -1,13 +1,13 @@
-package org.usfirst.frc.team2903.robot.commands.groups;
+package org.usfirst.frc.team2903.robot.commoners;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class DriveForTime extends Command {
+public class DriveToPosition extends Command {
 
-    public DriveForTime() {
+    public DriveToPosition() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

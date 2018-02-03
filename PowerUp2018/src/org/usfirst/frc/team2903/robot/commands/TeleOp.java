@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2903.robot.commands;
 
 import org.usfirst.frc.team2903.robot.Robot;
+import org.usfirst.frc.team2903.robot.commoners.GyroTurn;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
@@ -49,13 +50,24 @@ public class TeleOp extends Command {
         	//double joyForward = Robot.opJoy.getRawAxis(5);
         	double joyForward = Robot.opJoy.getRawAxis(2) - Robot.opJoy.getRawAxis(3);
         	double joyTurn = Robot.opJoy.getRawAxis(0);
-        	if (joyForward > 0) joyTurn = -joyTurn;
+        	double joyFineTurn = Robot.opJoy.getRawAxis(4)*0.6;
         	
-        	SmartDashboard.putNumber("forward", -forward);
-        	SmartDashboard.putNumber("turn", turn);
+        	double Xforward  = Robot.xboxJoy.getRawAxis(2) - Robot.xboxJoy.getRawAxis(3);
+        	double Xturn = Robot.xboxJoy.getRawAxis(0);
+        	
+        	double wheelForward = Robot.wheelJoy.getRawAxis(1) * 1.3;
+        	double wheelTurn = Robot.wheelJoy.getRawAxis(0) * 1.3;
+        	
+        	double totalForward = forward+joyForward+wheelForward+Xforward;
+        	double totalTurn = turn+joyTurn+joyFineTurn+wheelTurn+Xturn;
+        	
+        	if (totalForward > 0) totalTurn = -totalTurn;
+        	
+        	SmartDashboard.putNumber("forward", -totalForward);
+        	SmartDashboard.putNumber("turn", totalTurn);
         	SmartDashboard.putNumber("Gyro", Robot.gyroSubsystem.gyroPosition());
-        	Robot.driveSubsystem.arcadeDrive(joyForward, joyTurn);
-        	//SmartDashboard.putNumber("left", leftSide);
+        	Robot.driveSubsystem.arcadeDrive(totalForward, totalTurn);
+        	SmartDashboard.putNumber("POV", Robot.opJoy.getPOV());
         	//SmartDashboard.putNumber("right", rightSide);
         	//Robot.driveSubsystem.tankDrive(leftSide, rightSide);
         	

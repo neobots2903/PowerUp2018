@@ -14,7 +14,9 @@ public class GyroTurn extends Command {
 	double targetAngle;
 	double currentAngle;
 	double percentComplete;
+	double minSpeed = 0.45;
 	double error = 0.5;
+	double speedFactor = 1.0;
 	
     public GyroTurn(double degrees) {
     	requires(Robot.driveSubsystem);
@@ -34,24 +36,37 @@ public class GyroTurn extends Command {
     protected void execute() {
     	
     	currentAngle = Robot.gyroSubsystem.gyroPosition();
-		percentComplete = Math.abs((targetAngle-currentAngle)/goal)*2;
+		percentComplete = Math.abs((targetAngle-currentAngle)/goal)*speedFactor;
 		
-		if (percentComplete < 0.5) percentComplete = 0.5;
+		if (percentComplete < minSpeed) 
+		{
+			percentComplete = minSpeed;
+		}
+
 		
 		if (targetAngle - error > currentAngle)
+		{
 			Robot.driveSubsystem.arcadeDrive(0, percentComplete);
+		}
 		else if (targetAngle + error < currentAngle)
+		{
 			Robot.driveSubsystem.arcadeDrive(0, -percentComplete);
+		}
 		else 
+		{
 			Robot.driveSubsystem.arcadeDrive(0, 0);
+		}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (targetAngle - error > currentAngle || targetAngle + error < currentAngle)
+    	currentAngle = Robot.gyroSubsystem.gyroPosition();
+    	if (targetAngle - error > currentAngle || targetAngle + error < currentAngle) {
     		return false;
-    	else
+    	} else {
+    		Robot.driveSubsystem.arcadeDrive(0, 0);
     		return true;
+    	}
     }
 
 

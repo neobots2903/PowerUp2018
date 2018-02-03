@@ -1,17 +1,17 @@
-package org.usfirst.frc.team2903.robot.commands;
+package org.usfirst.frc.team2903.robot.commands.groups;
 
-import org.usfirst.frc.team2903.robot.Robot;
-import org.usfirst.frc.team2903.robot.commoners.GyroTurn;
+import org.usfirst.frc.team2903.robot.commoners.GearAim;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class DriveSquare extends CommandGroup {
+public class VisionTest extends CommandGroup {
 
-    public DriveSquare() {
-        addSequential(new GyroTurn(90));
+    public VisionTest() {
+        addSequential(new GearAim(true));
+        //      addSequential(new Command2());
         // these will run in order.
 
         // To run multiple commands at the same time,

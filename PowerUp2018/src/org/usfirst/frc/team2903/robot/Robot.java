@@ -9,10 +9,13 @@ package org.usfirst.frc.team2903.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoSource;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,12 +24,12 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team2903.robot.commands.DriveSquare;
 import org.usfirst.frc.team2903.robot.commands.MinimalAutonomous;
 import org.usfirst.frc.team2903.robot.commands.TeleOp;
+import org.usfirst.frc.team2903.robot.commands.groups.DriveSquare;
+import org.usfirst.frc.team2903.robot.commands.groups.VisionTest;
 import org.usfirst.frc.team2903.robot.subsystems.Drive2903;
 import org.usfirst.frc.team2903.robot.subsystems.Gyro2903;
-import org.usfirst.frc.team2903.robot.subsystems.Vision2903;
 
 import org.usfirst.frc.team2903.robot.subsystems.Pneumatics2903;
 import org.usfirst.frc.team2903.robot.subsystems.Arms2903;
@@ -46,17 +49,26 @@ public class Robot extends IterativeRobot {
 	public static Gyro2903 gyroSubsystem;
 	public static Pneumatics2903 pneumaticsSubsystem;
 	public static Climber2903 climberSubsystem;
-	public static Vision2903 camera;
 	
 	Command autonomousCommand;
 	SendableChooser<Command> autoChooser;
 	Command teleopCommand;
+	
+	public static final int IMG_WIDTH = 640;
+	public static final int IMG_HEIGHT = 480;
 
 	public static Joystick opJoy = new Joystick(0);
 	Button triggerKick = new JoystickButton(opJoy, 1);
 
 	public static Joystick driveJoy = new Joystick(1);
 	public static Joystick driveJoyExtra = new Joystick(2);	//purely for tank drive
+	
+	public static Joystick wheelJoy = new Joystick(2);
+	
+	public static XboxController xboxJoy = new XboxController(3);
+	
+	public static CameraServer cserver = CameraServer.getInstance();
+	public static UsbCamera camera;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -70,22 +82,27 @@ public class Robot extends IterativeRobot {
     	gyroSubsystem = new Gyro2903();
 		climberSubsystem = new Climber2903();
 		armSubsystem = new Arms2903();
-
-		camera = null;
 		
 		// SmartDashboard.putNumber("kP", minipidSubsystem.getP());
 		// SmartDashboard.putNumber("kI", minipidSubsystem.getI());
 		// SmartDashboard.putNumber("kD", minipidSubsystem.getD());
 
+		camera = cserver.startAutomaticCapture();
+		
 		// initialize the gyro
-		gyroSubsystem.reset();
+		
 		gyroSubsystem.calibrate();
+		gyroSubsystem.reset();
 
 		autoChooser = new SendableChooser<Command>();
 			//autoChooser.addObject("RightGear", new RightGear());
 			//autoChooser.addDefault("MiddleGear", new MiddleGear());
 			//autoChooser.addObject("LeftGear", new LeftGear());
-			autoChooser.addDefault("DriveSquare", new DriveSquare());
+			try {
+				autoChooser.addDefault("DriveSquare", new DriveSquare());
+				autoChooser.addObject("VisionTest", new VisionTest());
+			} catch (InterruptedException e) {
+			}
 			SmartDashboard.putData("AutoChooser", autoChooser);
 
       		teleopCommand = new TeleOp();
