@@ -12,5 +12,7 @@ public class RobotMap
 	public static final int AnalogGyro = 0;
 	public static final int highGearShiftSol = 0;
 	public static final int lowGearShiftSol = 1;
+	public static final int leftArmOpen = 2;
+	public static final int rightArmOpen = 3;
 	public static final int WinchMotor = 34;
 }

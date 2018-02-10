@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
-public class GearAim extends Command {
+public class SwitchAim extends Command {
 
 	private double centerX = 0.0;
 	private double width = 0.0;
@@ -27,7 +27,7 @@ public class GearAim extends Command {
 	private VisionThread visionThread;
 	private boolean drive;
 
-	public GearAim(boolean driveTowards) {
+	public SwitchAim(boolean driveTowards) {
 		requires(Robot.driveSubsystem);
 		drive = driveTowards;
 	}

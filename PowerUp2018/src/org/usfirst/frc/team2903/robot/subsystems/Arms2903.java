@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team2903.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.mindsensors.CANSD540;
+
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 
 public class Arms2903 extends Subsystem {
@@ -11,12 +13,17 @@ public class Arms2903 extends Subsystem {
 	// motor
 		static Spark ArmWheelLeft;
 		static Spark ArmWheelRight;
+		public Solenoid leftArmOpen;
+		public Solenoid rightArmOpen;
 		
 		public Arms2903() {
 			// instantiate the talon motor controllers
 			//ArmWheelLeft = new WPI_TalonSRX(RobotMap.ArmWheelLeft);
 			ArmWheelLeft = new Spark(RobotMap.ArmWheelLeft);
 			ArmWheelRight = new Spark(RobotMap.ArmWheelRight);
+			
+			leftArmOpen = new Solenoid (RobotMap.leftArmOpen);
+			rightArmOpen = new Solenoid (RobotMap.rightArmOpen);
 			
 			//ArmWheelLeft.configPeakOutputForward(1, 0);
 			//ArmWheelLeft.configPeakOutputReverse(-1, 0);
@@ -37,6 +44,16 @@ public class Arms2903 extends Subsystem {
 		public void stopArms() {
 			ArmWheelLeft.set(0);
 			ArmWheelRight.set(0);
+		}
+		
+		public void openArms() {
+			leftArmOpen.set(false);
+			rightArmOpen.set(false);
+		}
+		
+		public void closeArms() {
+			leftArmOpen.set(true);
+			rightArmOpen.set(true);
 		}
 		
     public void initDefaultCommand() {

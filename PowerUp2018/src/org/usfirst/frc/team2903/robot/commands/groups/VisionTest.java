@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2903.robot.commands.groups;
 
-import org.usfirst.frc.team2903.robot.commoners.GearAim;
-
+import org.usfirst.frc.team2903.robot.commoners.SwitchAim;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -10,7 +9,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class VisionTest extends CommandGroup {
 
     public VisionTest() {
-        addSequential(new GearAim(true));
+        addSequential(new SwitchAim(true));
         //      addSequential(new Command2());
         // these will run in order.
 

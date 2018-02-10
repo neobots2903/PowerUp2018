@@ -10,21 +10,16 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team2903.robot.commands.MinimalAutonomous;
 import org.usfirst.frc.team2903.robot.commands.TeleOp;
 import org.usfirst.frc.team2903.robot.commands.groups.DriveSquare;
 import org.usfirst.frc.team2903.robot.commands.groups.VisionTest;
@@ -54,6 +49,16 @@ public class Robot extends IterativeRobot {
 	SendableChooser<Command> autoChooser;
 	Command teleopCommand;
 	
+	Preferences prefs;
+	
+	public static String startPosition;
+	public static boolean stayOnSide;
+	public static boolean doJustBaseline;
+	public static boolean doSwitch;
+	public static int startDelay;
+	
+	public static DriverStation gameData;
+	
 	public static final int IMG_WIDTH = 640;
 	public static final int IMG_HEIGHT = 480;
 
@@ -69,6 +74,7 @@ public class Robot extends IterativeRobot {
 	
 	public static CameraServer cserver = CameraServer.getInstance();
 	public static UsbCamera camera;
+
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -95,16 +101,15 @@ public class Robot extends IterativeRobot {
 		gyroSubsystem.reset();
 
 		autoChooser = new SendableChooser<Command>();
-			//autoChooser.addObject("RightGear", new RightGear());
-			//autoChooser.addDefault("MiddleGear", new MiddleGear());
-			//autoChooser.addObject("LeftGear", new LeftGear());
-			try {
-				autoChooser.addDefault("DriveSquare", new DriveSquare());
-				autoChooser.addObject("VisionTest", new VisionTest());
-			} catch (InterruptedException e) {
-			}
-			SmartDashboard.putData("AutoChooser", autoChooser);
-
+		try {
+			autoChooser.addDefault("DriveSquare", new DriveSquare());
+		} catch (InterruptedException e) { e.printStackTrace(); }
+		autoChooser.addObject("VisionTest", new VisionTest());
+		SmartDashboard.putData("AutoChooser", autoChooser);
+		
+		prefs = Preferences.getInstance();
+		updatePrefs();
+		
       		teleopCommand = new TeleOp();
 			//teleopCommand = null;
 	}
@@ -112,10 +117,20 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
+	
+	public void updatePrefs() {
+		startPosition = prefs.getString("Start position", "middle");
+		stayOnSide = prefs.getBoolean("Stay on side", true);
+		doJustBaseline = prefs.getBoolean("Do just baseline", false);
+		doSwitch = prefs.getBoolean("Do switch", false);
+		startDelay = prefs.getInt("Start Delay", 1);
+		gameData = DriverStation.getInstance();
+	}
 
 	public void autonomousInit() {
 //		// schedule the autonomous command (example)
 		autonomousCommand = (Command) autoChooser.getSelected();
+		updatePrefs();
 		autonomousCommand.start();
 	}
 

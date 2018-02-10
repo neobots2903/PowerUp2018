@@ -4,7 +4,9 @@ import org.usfirst.frc.team2903.robot.Robot;
 import org.usfirst.frc.team2903.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -13,9 +15,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive2903 extends Subsystem 
 {
-	WPI_TalonSRX leftFrontMotor;
+	public WPI_TalonSRX leftFrontMotor;
 	WPI_TalonSRX leftRearMotor;
-	WPI_TalonSRX rightFrontMotor;
+	public WPI_TalonSRX rightFrontMotor;
 	WPI_TalonSRX rightRearMotor;
 	SpeedControllerGroup m_Left;
 	SpeedControllerGroup m_Right;
@@ -29,6 +31,10 @@ public class Drive2903 extends Subsystem
 		leftRearMotor = new WPI_TalonSRX(RobotMap.LeftBottomMotor);
 		rightFrontMotor = new WPI_TalonSRX(RobotMap.RightTopMotor);
 		rightRearMotor = new WPI_TalonSRX(RobotMap.RightBottomMotor);
+		
+		// configure encoders
+		leftFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		rightFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		
 		// configure the output
 		rightFrontMotor.configPeakOutputForward(1, 0);
