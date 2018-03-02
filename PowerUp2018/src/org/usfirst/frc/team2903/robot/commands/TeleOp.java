@@ -4,6 +4,7 @@ import org.usfirst.frc.team2903.robot.Robot;
 import org.usfirst.frc.team2903.robot.commoners.GyroTurn;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -28,59 +29,65 @@ public class TeleOp extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-//    	if (Robot.driveJoy.getRawButton(9) || Robot.driveJoyExtra.getRawButton(9)) {
-//    		if(isTogglePressed) return;
-//			Robot.driveSubsystem.changeToHighGear();
-//			isTogglePressed = true;
-//    	} 
-//    	else {
-//    		isTogglePressed = false;
-//    	}
+    	if (Robot.xboxJoy.getRawButton(5)) {
+			Robot.driveSubsystem.changeToLowGear();
+    	} 
+    	else if (Robot.xboxJoy.getRawButton(6)) {
+    		Robot.driveSubsystem.changeToHighGear();
+    	}
     	
-//    	if(isTANK) {
-//    		double leftSpeed = Robot.driveJoy.getY();
-//    		double rightSpeed = Robot.driveJoyExtra.getY();
-//    		Robot.driveSubsystem.tankDrive(leftSpeed, rightSpeed);
-//    	} 
-//    	else {
-        	double forward = Robot.driveJoy.getY();
-        	double turn = Robot.driveJoy.getX();
-        	
-        	//double leftSide = Robot.opJoy.getY();
-        	//double joyForward = Robot.opJoy.getRawAxis(5);
-        	double joyForward = Robot.opJoy.getRawAxis(2) - Robot.opJoy.getRawAxis(3);
-        	double joyTurn = Robot.opJoy.getRawAxis(0);
-        	double joyFineTurn = Robot.opJoy.getRawAxis(4)*0.6;
-        	
-        	double Xforward  = Robot.xboxJoy.getRawAxis(2) - Robot.xboxJoy.getRawAxis(3);
-        	double Xturn = Robot.xboxJoy.getRawAxis(0);
-        	
-        	double wheelForward = Robot.wheelJoy.getRawAxis(1) * 1.3;
-        	double wheelTurn = Robot.wheelJoy.getRawAxis(0) * 1.3;
-        	
-        	double totalForward = forward+joyForward+wheelForward+Xforward;
-        	double totalTurn = turn+joyTurn+joyFineTurn+wheelTurn+Xturn;
-        	
-        	if (totalForward > 0) totalTurn = -totalTurn;
-        	
-        	SmartDashboard.putNumber("forward", -totalForward);
-        	SmartDashboard.putNumber("turn", totalTurn);
-        	SmartDashboard.putNumber("Gyro", Robot.gyroSubsystem.gyroPosition());
-        	Robot.driveSubsystem.arcadeDrive(totalForward, totalTurn);
-        	SmartDashboard.putNumber("POV", Robot.opJoy.getPOV());
-        	//SmartDashboard.putNumber("right", rightSide);
-        	//Robot.driveSubsystem.tankDrive(leftSide, rightSide);
-        	
-        	if (Robot.opJoy.getRawButton(5)) {
-        		Robot.armSubsystem.throwCube();
-        	} 
-        	else if (Robot.opJoy.getRawButton(6)) {
-        		Robot.armSubsystem.grabCube();
-        	} 
-        	else {
-        		Robot.armSubsystem.stopArms();
-        	}
-    //	}
+    	double Xforward  = Robot.xboxJoy.getRawAxis(2) - Robot.xboxJoy.getRawAxis(3);
+    	double Xturn = Robot.xboxJoy.getRawAxis(0);
+    	
+    	/////////////////////////////////////////////////////////////////////////
+    	/////////////////Turn inverts when driving forward///////////////////////
+    	/////////////////////////////////////////////////////////////////////////
+    	if (Xforward > 0) Xturn = -Xturn;
+    	
+    	SmartDashboard.putNumber("forward", -Xforward);
+    	SmartDashboard.putNumber("turn", Xturn);
+    	SmartDashboard.putNumber("Gyro", Robot.gyroSubsystem.gyroPosition());
+    	SmartDashboard.putNumber("Acceleration ", Robot.gyroSubsystem.getAccel());
+    	Robot.driveSubsystem.arcadeDrive(Xforward, Xturn);
+    	SmartDashboard.putNumber("POV", Robot.opJoy.getPOV());
+    	
+    	if (Robot.opJoy.getRawButton(5)) {
+    		Robot.armSubsystem.throwCube();
+    	} 
+    	else if (Robot.opJoy.getRawButton(6)) {
+    		Robot.armSubsystem.grabCube();
+    	} 
+    	else {
+    		Robot.armSubsystem.stopArms();
+    	}
+    	
+    	if (Robot.opJoy.getRawButton(1)) {
+    		Robot.armSubsystem.openArms();
+    	} 
+    	else if (Robot.opJoy.getRawButton(2)) {
+    		Robot.armSubsystem.closeArms();
+    	} 
+    	else {
+    		Robot.armSubsystem.stopArms();
+    	}
+    	
+    	if (Robot.opJoy.getRawButton(7)) {
+    		Robot.armSubsystem.movePivot(0.6);
+    	} else if (Robot.opJoy.getRawButton(8)) {
+    		Robot.armSubsystem.movePivot(-0.6);
+    	} else {
+    		Robot.armSubsystem.stopPivot();
+    	}
+
+    	Robot.liftSubsystem.MOVE(Robot.opJoy.getRawAxis(3) - Robot.opJoy.getRawAxis(2));
+    	
+    	if (Robot.opJoy.getPOV(0) == 0) {
+    		Robot.climbSubsystem.LiftOff();
+    	} else if (Robot.opJoy.getPOV(0) == 180) {
+    		Robot.climbSubsystem.Fall();
+    	} else {
+    		Robot.climbSubsystem.Stop(); 
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

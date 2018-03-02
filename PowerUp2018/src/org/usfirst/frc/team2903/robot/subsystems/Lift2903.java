@@ -1,21 +1,21 @@
 package org.usfirst.frc.team2903.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team2903.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-public class Climber2903 extends Subsystem {
+public class Lift2903 extends Subsystem {
 
 	// motor
-	static WPI_TalonSRX ClimberMotor;
+	static WPI_TalonSRX LiftMotor;
 
-	public Climber2903() {
+	public Lift2903() {
 		// instantiate the talon motor controllers
-		ClimberMotor = new WPI_TalonSRX(RobotMap.WinchMotor);
-
+		LiftMotor = new WPI_TalonSRX(RobotMap.LiftMotor);
 		// enable the motors
-		//ClimberMotor.enable();
+		//LiftMotor.enable();
 	}
 
 	@Override
@@ -24,17 +24,12 @@ public class Climber2903 extends Subsystem {
 
 	}
 
-	public void LiftOff() {
+	public void MOVE(double speed) {
 		// Pick balls up
-		ClimberMotor.set(-1);
-	}
-
-	public void Fall() {
-		// spit balls out
-		ClimberMotor.set(1);
+		LiftMotor.set(speed);
 	}
 
 	public void StopLift() {
-		ClimberMotor.set(0);
+		LiftMotor.set(0);
 	}
 }

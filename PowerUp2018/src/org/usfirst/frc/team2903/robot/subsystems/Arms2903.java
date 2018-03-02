@@ -11,24 +11,26 @@ import edu.wpi.first.wpilibj.Spark;
 public class Arms2903 extends Subsystem {
 
 	// motor
-		static Spark ArmWheelLeft;
-		static Spark ArmWheelRight;
+		static WPI_TalonSRX ArmWheelLeft;
+		static WPI_TalonSRX ArmWheelRight;
 		public Solenoid leftArmOpen;
 		public Solenoid rightArmOpen;
+		private WPI_TalonSRX ArmPivot;
 		
 		public Arms2903() {
 			// instantiate the talon motor controllers
-			//ArmWheelLeft = new WPI_TalonSRX(RobotMap.ArmWheelLeft);
-			ArmWheelLeft = new Spark(RobotMap.ArmWheelLeft);
-			ArmWheelRight = new Spark(RobotMap.ArmWheelRight);
+			ArmWheelLeft = new WPI_TalonSRX(RobotMap.ArmWheelLeft);
+			ArmWheelRight = new WPI_TalonSRX(RobotMap.ArmWheelRight);
 			
 			leftArmOpen = new Solenoid (RobotMap.leftArmOpen);
 			rightArmOpen = new Solenoid (RobotMap.rightArmOpen);
 			
-			//ArmWheelLeft.configPeakOutputForward(1, 0);
-			//ArmWheelLeft.configPeakOutputReverse(-1, 0);
-			//ArmWheelRight.configPeakOutputForward(1, 0);
-			//ArmWheelRight.configPeakOutputReverse(-1, 0);
+			ArmPivot = new WPI_TalonSRX(RobotMap.ArmPivot);
+			
+			ArmWheelLeft.configPeakOutputForward(1, 0);
+			ArmWheelLeft.configPeakOutputReverse(-1, 0);
+			ArmWheelRight.configPeakOutputForward(1, 0);
+			ArmWheelRight.configPeakOutputReverse(-1, 0);
 		}
 
 		public void grabCube() {
@@ -56,6 +58,13 @@ public class Arms2903 extends Subsystem {
 			rightArmOpen.set(true);
 		}
 		
+		public void movePivot(double speed) {
+			ArmPivot.set(speed);
+		}
+		
+		public void stopPivot() {
+			ArmPivot.set(0);
+		}
     public void initDefaultCommand() {
     }
 }

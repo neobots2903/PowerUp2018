@@ -54,7 +54,7 @@ public class Drive2903 extends Subsystem
 
 	public void arcadeDrive(double forward, double turn) 
 	{
-		robotDrive.arcadeDrive(forward, -(turn));
+		robotDrive.arcadeDrive(-forward, -(turn));
 	}
 
 	@Override
@@ -67,8 +67,10 @@ public class Drive2903 extends Subsystem
 	{
 		Robot.driveSubsystem.rightFrontMotor.set(ControlMode.PercentOutput,1);
 		Robot.driveSubsystem.leftFrontMotor.set(ControlMode.PercentOutput,0);
-		Robot.driveSubsystem.rightRearMotor.set(ControlMode.Follower,RobotMap.RightTopMotor);
-		Robot.driveSubsystem.leftRearMotor.set(ControlMode.Follower,RobotMap.LeftTopMotor);
+		Robot.driveSubsystem.rightRearMotor.set(ControlMode.PercentOutput,1);
+		Robot.driveSubsystem.leftRearMotor.set(ControlMode.PercentOutput,0);
+//		Robot.driveSubsystem.rightRearMotor.set(ControlMode.Follower,RobotMap.RightTopMotor);
+//		Robot.driveSubsystem.leftRearMotor.set(ControlMode.Follower,RobotMap.LeftTopMotor);
 	}
 	
 	public void setAutoMode()

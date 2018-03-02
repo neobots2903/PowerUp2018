@@ -6,6 +6,8 @@ import org.usfirst.frc.team2903.robot.Robot;
 import org.usfirst.frc.team2903.robot.subsystems.VisionPipeline2903;
 
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
@@ -14,10 +16,10 @@ public class SwitchAim extends Command {
 
 	private double centerX = 0.0;
 	private double width = 0.0;
-	public static final double maxWidth = 60.0;
-	public static final int error = 5;
-	public static final int maxError = 60;
-	public static final int errorMulti = 18;
+	public static final double maxWidth = 60.0;	//how close the robot is allowed to get to the target
+	public static final int error = 5;	//error if we are not driving towards the target; just aiming
+	public static final int maxError = 60;	//maximum allowed error before the robot is forced to re-aim
+	public static final int errorMulti = 18;	//the smaller this number is, the more strict it is about aiming
 	public static final double maxSpeed = 0.55;
 	public static final double minSpeed = 0.44;
 	public static final double minForwardSpeed = 0.5;
@@ -26,6 +28,8 @@ public class SwitchAim extends Command {
 	private Object imgLock = new Object();
 	private VisionThread visionThread;
 	private boolean drive;
+	private NetworkTableInstance table;
+	private NetworkTable datatable;
 
 	public SwitchAim(boolean driveTowards) {
 		requires(Robot.driveSubsystem);
@@ -34,6 +38,7 @@ public class SwitchAim extends Command {
 
 	@Override
 	protected void initialize() {
+		/*
 		UsbCamera camera = Robot.camera;//CameraServer.getInstance().addAxisCamera("10.29.3.56");
 		
 		camera.setResolution(Robot.IMG_WIDTH, Robot.IMG_HEIGHT);
@@ -48,8 +53,14 @@ public class SwitchAim extends Command {
 				}
 		});
 		visionThread.start();
+		*/
+		table = NetworkTableInstance.getDefault();
+	    // Set your team number here
+	    table.setServerTeam(2903);
+	    datatable = table.getTable("datatable");
 	}
 
+	
 	public double getCenterX() {
 		double localCenterX;
 		synchronized (imgLock) {
@@ -65,19 +76,26 @@ public class SwitchAim extends Command {
 		}
 		return localWidth;
 	}
+	
 
 	@Override
 	protected void execute() {
+		
+		/*
 		double localCenterX = getCenterX();
 		double localWidth = getWidth();
 		SmartDashboard.putNumber("CenterX ", localCenterX);
 		SmartDashboard.putNumber("Width ", localWidth);
+		*/
+		
+		SmartDashboard.putNumber("CenterX ", datatable.getEntry("centerX").getValue().getDouble());
+		SmartDashboard.putNumber("Width ", datatable.getEntry("width").getValue().getDouble());
 	}
 
 	@Override
 	protected boolean isFinished() {
-		double localCenterX = getCenterX();
-		double localWidth = getWidth();
+		double localCenterX = datatable.getEntry("centerX").getValue().getDouble();
+		double localWidth = datatable.getEntry("width").getValue().getDouble();
 		double distanceFromCenter = (localCenterX - (Robot.IMG_WIDTH / 2));
 		double turn = distanceFromCenter / (Robot.IMG_WIDTH / 2);
 		if (Math.abs(turn) > maxSpeed) {

@@ -28,7 +28,8 @@ import org.usfirst.frc.team2903.robot.subsystems.Gyro2903;
 
 import org.usfirst.frc.team2903.robot.subsystems.Pneumatics2903;
 import org.usfirst.frc.team2903.robot.subsystems.Arms2903;
-import org.usfirst.frc.team2903.robot.subsystems.Climber2903;
+import org.usfirst.frc.team2903.robot.subsystems.Climb2903;
+import org.usfirst.frc.team2903.robot.subsystems.Lift2903;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -43,7 +44,8 @@ public class Robot extends IterativeRobot {
 	public static Arms2903 armSubsystem;
 	public static Gyro2903 gyroSubsystem;
 	public static Pneumatics2903 pneumaticsSubsystem;
-	public static Climber2903 climberSubsystem;
+	public static Lift2903 liftSubsystem;
+	public static Climb2903 climbSubsystem;
 	
 	Command autonomousCommand;
 	SendableChooser<Command> autoChooser;
@@ -64,11 +66,6 @@ public class Robot extends IterativeRobot {
 
 	public static Joystick opJoy = new Joystick(0);
 	Button triggerKick = new JoystickButton(opJoy, 1);
-
-	public static Joystick driveJoy = new Joystick(1);
-	public static Joystick driveJoyExtra = new Joystick(2);	//purely for tank drive
-	
-	public static Joystick wheelJoy = new Joystick(2);
 	
 	public static XboxController xboxJoy = new XboxController(3);
 	
@@ -86,8 +83,9 @@ public class Robot extends IterativeRobot {
 		pneumaticsSubsystem = new Pneumatics2903();
 		driveSubsystem = new Drive2903();
     	gyroSubsystem = new Gyro2903();
-		climberSubsystem = new Climber2903();
+		liftSubsystem = new Lift2903();
 		armSubsystem = new Arms2903();
+		climbSubsystem = new Climb2903();
 		
 		// SmartDashboard.putNumber("kP", minipidSubsystem.getP());
 		// SmartDashboard.putNumber("kI", minipidSubsystem.getI());
