@@ -45,9 +45,9 @@ public class Autonomous extends CommandGroup {
 				
 			if (Robot.doSwitch) {	//and if we're doing the switch
 				addSequential(new SwitchAim(true));	//then aim to the switch
-				Robot.armSubsystem.throwCube(0.8);
+				Robot.intakeSubsystem.throwCube(0.8);
 				Thread.sleep(500);
-				Robot.armSubsystem.stopArms();
+				Robot.intakeSubsystem.stopArms();
 			}
         }
     }
@@ -72,7 +72,7 @@ public class Autonomous extends CommandGroup {
 				if (switchLocation == 1) {
 					addSequential(new GyroTurn(-90));	//Turn to the left
 					addSequential(new DriveForTime(1000, 0.7));	//Drive to left side
-					addSequential(new GyroTurn(-90));	//Turn to the right (straightening back out)
+					addSequential(new GyroTurn(90));	//Turn to the right (straightening back out)
 					addSequential(new DriveForTime(2000, 0.7));	//Drive straight across the line
 				} else if (switchLocation == 3) {
 					addSequential(new GyroTurn(90));	//Turn to the right
@@ -85,7 +85,7 @@ public class Autonomous extends CommandGroup {
 				if (switchLocation == 1) {
 					addSequential(new GyroTurn(-90));	//Turn to the left
 					addSequential(new DriveForTime(2000, 0.7));	//Drive to left side
-					addSequential(new GyroTurn(-90));	//Turn to the right (straightening back out)
+					addSequential(new GyroTurn(90));	//Turn to the right (straightening back out)
 					addSequential(new DriveForTime(2000, 0.7));	//Drive straight across the line
 				} else if (switchLocation == 3) {
 					addSequential(new DriveForTime(2000, 0.7));	//Drive straight across line.

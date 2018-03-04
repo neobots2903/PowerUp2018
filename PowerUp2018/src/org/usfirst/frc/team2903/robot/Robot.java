@@ -25,11 +25,12 @@ import org.usfirst.frc.team2903.robot.commands.groups.DriveSquare;
 import org.usfirst.frc.team2903.robot.commands.groups.VisionTest;
 import org.usfirst.frc.team2903.robot.subsystems.Drive2903;
 import org.usfirst.frc.team2903.robot.subsystems.Gyro2903;
-
+import org.usfirst.frc.team2903.robot.subsystems.Intake2903;
 import org.usfirst.frc.team2903.robot.subsystems.Pneumatics2903;
 import org.usfirst.frc.team2903.robot.subsystems.Arms2903;
 import org.usfirst.frc.team2903.robot.subsystems.Climb2903;
 import org.usfirst.frc.team2903.robot.subsystems.Lift2903;
+import org.usfirst.frc.team2903.robot.subsystems.Pivot2903;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -46,6 +47,8 @@ public class Robot extends IterativeRobot {
 	public static Pneumatics2903 pneumaticsSubsystem;
 	public static Lift2903 liftSubsystem;
 	public static Climb2903 climbSubsystem;
+	public static Intake2903 intakeSubsystem;
+	public static Pivot2903 pivotSubsystem;
 	
 	Command autonomousCommand;
 	SendableChooser<Command> autoChooser;
@@ -86,6 +89,8 @@ public class Robot extends IterativeRobot {
 		liftSubsystem = new Lift2903();
 		armSubsystem = new Arms2903();
 		climbSubsystem = new Climb2903();
+		intakeSubsystem = new Intake2903();
+		pivotSubsystem = new Pivot2903();
 		
 		// SmartDashboard.putNumber("kP", minipidSubsystem.getP());
 		// SmartDashboard.putNumber("kI", minipidSubsystem.getI());

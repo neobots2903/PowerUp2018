@@ -48,13 +48,25 @@ public class TeleOp extends Command {
     	SmartDashboard.putNumber("turn", Xturn);
     	SmartDashboard.putNumber("Gyro", Robot.gyroSubsystem.gyroPosition());
     	SmartDashboard.putNumber("Acceleration ", Robot.gyroSubsystem.getAccel());
+    	
+    	//altered drive code, that will only drive with one side at a time while "y" is pressed
+    	if (Robot.xboxJoy.getYButton()) {
+    		if (Xturn < 0) {	//if turning left
+    			Robot.driveSubsystem.tankDrive(0, Xturn);
+    		}
+    		if (Xturn > 0) {	//if turning right
+    			Robot.driveSubsystem.tankDrive(Xturn, 0);
+    		}
+    	} else {
     	Robot.driveSubsystem.arcadeDrive(Xforward, Xturn);
+    	}
+    	
     	SmartDashboard.putNumber("POV", Robot.opJoy.getPOV());
     	
     	if (Robot.opJoy.getRawButton(3)) {
-    		Robot.armSubsystem.throwCube(1);
+    		Robot.intakeSubsystem.throwCube(1);
     	} else if (Robot.opJoy.getRawButton(4)) {
-    		Robot.armSubsystem.grabCube(1);
+    		Robot.intakeSubsystem.grabCube(1);
     	} 
 //    	else {
 //    		Robot.armSubsystem.stopArms();
@@ -65,17 +77,14 @@ public class TeleOp extends Command {
     	} 
     	else if (Robot.opJoy.getRawButton(2)) {
     		Robot.armSubsystem.closeArms();
-    	} 
-    	else {
-    		Robot.armSubsystem.stopArms();
     	}
     	
     	if (Robot.opJoy.getRawButton(7)) {
-    		Robot.armSubsystem.movePivot(0.6);
+    		Robot.pivotSubsystem.movePivot(0.6);
     	} else if (Robot.opJoy.getRawButton(8)) {
-    		Robot.armSubsystem.movePivot(-0.6);
+    		Robot.pivotSubsystem.movePivot(-0.6);
     	} else {
-    		Robot.armSubsystem.stopPivot();
+    		Robot.pivotSubsystem.stopPivot();
     	}
 
     	Robot.liftSubsystem.MOVE((Robot.opJoy.getRawAxis(2) - Robot.opJoy.getRawAxis(3))*0.8);

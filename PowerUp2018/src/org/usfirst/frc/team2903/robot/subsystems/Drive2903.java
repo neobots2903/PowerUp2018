@@ -16,9 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Drive2903 extends Subsystem 
 {
 	public WPI_TalonSRX leftFrontMotor;
-	WPI_TalonSRX leftRearMotor;
+	public WPI_TalonSRX leftRearMotor;
 	public WPI_TalonSRX rightFrontMotor;
-	WPI_TalonSRX rightRearMotor;
+	public WPI_TalonSRX rightRearMotor;
 	SpeedControllerGroup m_Left;
 	SpeedControllerGroup m_Right;
 	
