@@ -45,7 +45,7 @@ public class Autonomous extends CommandGroup {
 				
 			if (Robot.doSwitch) {	//and if we're doing the switch
 				addSequential(new SwitchAim(true));	//then aim to the switch
-				Robot.armSubsystem.throwCube();
+				Robot.armSubsystem.throwCube(0.8);
 				Thread.sleep(500);
 				Robot.armSubsystem.stopArms();
 			}

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2903.robot.commands.groups;
 
+import org.usfirst.frc.team2903.robot.commoners.DriveForTime;
 import org.usfirst.frc.team2903.robot.commoners.GyroTurn;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -9,13 +10,19 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveSquare extends CommandGroup {
 
     public DriveSquare() throws InterruptedException {
-    	Thread.sleep(1000);
-        addSequential(new GyroTurn(90));
-        Thread.sleep(1000);
-        addSequential(new GyroTurn(-90));
-        Thread.sleep(1000);
-        addSequential(new GyroTurn(360));
-        Thread.sleep(1000);
+    	addSequential(new DriveForTime(15000, -0.5));
+//    	addSequential(new GyroTurn(45));//switch left or right 
+//    	addSequential(new DriveForTime(5000, -0.8));
+    	//Thread.sleep(10000);
+    	
+//        addSequential(new GyroTurn(90));
+//        Thread.sleep(1000);
+//        addSequential(new GyroTurn(-90));
+//        Thread.sleep(1000);
+//        addSequential(new GyroTurn(360));
+//        Thread.sleep(1000);
+    	
+    	
         // these will run in order.
 
         // To run multiple commands at the same time,

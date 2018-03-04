@@ -51,15 +51,14 @@ public class TeleOp extends Command {
     	Robot.driveSubsystem.arcadeDrive(Xforward, Xturn);
     	SmartDashboard.putNumber("POV", Robot.opJoy.getPOV());
     	
-    	if (Robot.opJoy.getRawButton(5)) {
-    		Robot.armSubsystem.throwCube();
+    	if (Robot.opJoy.getRawButton(3)) {
+    		Robot.armSubsystem.throwCube(1);
+    	} else if (Robot.opJoy.getRawButton(4)) {
+    		Robot.armSubsystem.grabCube(1);
     	} 
-    	else if (Robot.opJoy.getRawButton(6)) {
-    		Robot.armSubsystem.grabCube();
-    	} 
-    	else {
-    		Robot.armSubsystem.stopArms();
-    	}
+//    	else {
+//    		Robot.armSubsystem.stopArms();
+//    	}
     	
     	if (Robot.opJoy.getRawButton(1)) {
     		Robot.armSubsystem.openArms();
@@ -79,7 +78,7 @@ public class TeleOp extends Command {
     		Robot.armSubsystem.stopPivot();
     	}
 
-    	Robot.liftSubsystem.MOVE(Robot.opJoy.getRawAxis(3) - Robot.opJoy.getRawAxis(2));
+    	Robot.liftSubsystem.MOVE((Robot.opJoy.getRawAxis(2) - Robot.opJoy.getRawAxis(3))*0.8);
     	
     	if (Robot.opJoy.getPOV(0) == 0) {
     		Robot.climbSubsystem.LiftOff();

@@ -21,6 +21,8 @@ public class Drive2903 extends Subsystem
 	WPI_TalonSRX rightRearMotor;
 	SpeedControllerGroup m_Left;
 	SpeedControllerGroup m_Right;
+	
+	static double maxOutput = 0.7;
 
 	public DifferentialDrive robotDrive;
 
@@ -37,14 +39,17 @@ public class Drive2903 extends Subsystem
 		rightFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		
 		// configure the output
-		rightFrontMotor.configPeakOutputForward(1, 0);
-		rightFrontMotor.configPeakOutputReverse(-1, 0);
-		leftFrontMotor.configPeakOutputForward(1, 0);
-		leftFrontMotor.configPeakOutputReverse(-1, 0);
-		rightRearMotor.configPeakOutputForward(1, 0);
-		rightRearMotor.configPeakOutputReverse(-1, 0);
-		leftRearMotor.configPeakOutputForward(1, 0);
-		leftRearMotor.configPeakOutputReverse(-1, 0);
+		rightFrontMotor.configPeakOutputForward(maxOutput, 0);
+		rightFrontMotor.configPeakOutputReverse(-maxOutput, 0);
+		leftFrontMotor.configPeakOutputForward(maxOutput, 0);
+		leftFrontMotor.configPeakOutputReverse(-maxOutput, 0);
+		rightRearMotor.configPeakOutputForward(maxOutput, 0);
+		
+		rightRearMotor.configPeakOutputReverse(-maxOutput, 0);
+		leftRearMotor.configPeakOutputForward(maxOutput, 0);
+		leftRearMotor.configPeakOutputReverse(-maxOutput, 0);
+		
+		//rightFrontMotor.configPeakCurrentLimit(amps, timeoutMs)
 		
 		m_Left = new SpeedControllerGroup(leftFrontMotor, leftRearMotor);
 		m_Right = new SpeedControllerGroup(rightFrontMotor, rightRearMotor);
@@ -54,7 +59,7 @@ public class Drive2903 extends Subsystem
 
 	public void arcadeDrive(double forward, double turn) 
 	{
-		robotDrive.arcadeDrive(-forward, -(turn));
+		robotDrive.arcadeDrive(forward, -(turn));
 	}
 
 	@Override
