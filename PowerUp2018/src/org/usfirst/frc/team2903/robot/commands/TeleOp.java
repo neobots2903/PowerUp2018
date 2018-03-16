@@ -5,6 +5,7 @@ import org.usfirst.frc.team2903.robot.commoners.GyroTurn;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -15,6 +16,7 @@ public class TeleOp extends Command {
 
 	public boolean isTANK = false;
 	public boolean isTogglePressed = false;
+	//PowerDistributionPanel pdp;
 	
     public TeleOp() {
     	requires(Robot.driveSubsystem);
@@ -36,41 +38,37 @@ public class TeleOp extends Command {
     		Robot.driveSubsystem.changeToHighGear();
     	}
     	
-    	double Xforward  = Robot.xboxJoy.getRawAxis(2) - Robot.xboxJoy.getRawAxis(3);
+    	double Xforward  = (Robot.xboxJoy.getRawAxis(3) - Robot.xboxJoy.getRawAxis(2))* -1;
     	double Xturn = Robot.xboxJoy.getRawAxis(0);
+
+    	if (Xforward <= 0) Xturn = -Xturn;
     	
-    	/////////////////////////////////////////////////////////////////////////
-    	/////////////////Turn inverts when driving forward///////////////////////
-    	/////////////////////////////////////////////////////////////////////////
-    	if (Xforward > 0) Xturn = -Xturn;
-    	
-    	SmartDashboard.putNumber("forward", -Xforward);
+    	SmartDashboard.putNumber("Current 12", Robot.PDP.getCurrent(12));
+    	SmartDashboard.putNumber("Current 13", Robot.PDP.getCurrent(13));
+    	SmartDashboard.putNumber("Current 14", Robot.PDP.getCurrent(14));
+    	SmartDashboard.putNumber("Current 15", Robot.PDP.getCurrent(15));
+    	SmartDashboard.putNumber("forward", Xforward);
     	SmartDashboard.putNumber("turn", Xturn);
     	SmartDashboard.putNumber("Gyro", Robot.gyroSubsystem.gyroPosition());
     	SmartDashboard.putNumber("Acceleration ", Robot.gyroSubsystem.getAccel());
+//    	SmartDashboard.putNumber("PDP 12", pdp.getCurrent(12));
+//    	SmartDashboard.putNumber("PDP 13", pdp.getCurrent(13));
+//    	SmartDashboard.putNumber("PDP 14", pdp.getCurrent(14));
+//    	SmartDashboard.putNumber("PDP 15", pdp.getCurrent(15));
     	
-    	//altered drive code, that will only drive with one side at a time while "y" is pressed
-    	if (Robot.xboxJoy.getYButton()) {
-    		if (Xturn < 0) {	//if turning left
-    			Robot.driveSubsystem.tankDrive(0, Xturn);
-    		}
-    		if (Xturn > 0) {	//if turning right
-    			Robot.driveSubsystem.tankDrive(Xturn, 0);
-    		}
-    	} else {
-    	Robot.driveSubsystem.arcadeDrive(Xforward, Xturn);
-    	}
+    	Robot.driveSubsystem.arcadeDrive(Xforward, Xforward <= 0 ? Xturn:-Xturn);
     	
     	SmartDashboard.putNumber("POV", Robot.opJoy.getPOV());
     	
-    	if (Robot.opJoy.getRawButton(3)) {
+    	if (Robot.opJoy.getRawButton(6)) {
     		Robot.intakeSubsystem.throwCube(1);
-    	} else if (Robot.opJoy.getRawButton(4)) {
+    	} 
+    	else if (Robot.opJoy.getRawButton(5)) {
     		Robot.intakeSubsystem.grabCube(1);
     	} 
-//    	else {
-//    		Robot.armSubsystem.stopArms();
-//    	}
+    	else {
+    		Robot.intakeSubsystem.stopArms();
+    	}
     	
     	if (Robot.opJoy.getRawButton(1)) {
     		Robot.armSubsystem.openArms();

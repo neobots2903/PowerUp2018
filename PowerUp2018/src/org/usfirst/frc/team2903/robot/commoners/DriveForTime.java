@@ -24,8 +24,10 @@ public class DriveForTime extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	long localTime = System.currentTimeMillis();
+    	while (localTime + time > System.currentTimeMillis()) {
     	Robot.driveSubsystem.arcadeDrive(speed, 0);
-    	try { Thread.sleep(time); } catch (InterruptedException e) { e.printStackTrace(); }
+    	}
     	Robot.driveSubsystem.arcadeDrive(0, 0);
     }
 

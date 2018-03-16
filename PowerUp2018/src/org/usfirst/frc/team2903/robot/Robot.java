@@ -13,6 +13,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -49,6 +50,7 @@ public class Robot extends IterativeRobot {
 	public static Climb2903 climbSubsystem;
 	public static Intake2903 intakeSubsystem;
 	public static Pivot2903 pivotSubsystem;
+	public static PowerDistributionPanel PDP;
 	
 	Command autonomousCommand;
 	SendableChooser<Command> autoChooser;
@@ -97,6 +99,8 @@ public class Robot extends IterativeRobot {
 		// SmartDashboard.putNumber("kD", minipidSubsystem.getD());
 
 		camera = cserver.startAutomaticCapture();
+		PDP = new PowerDistributionPanel();
+		//PDP.clearStickyFaults();
 		
 		// initialize the gyro
 		
@@ -104,10 +108,8 @@ public class Robot extends IterativeRobot {
 		gyroSubsystem.reset();
 
 		autoChooser = new SendableChooser<Command>();
-		try {
-			autoChooser.addDefault("DriveSquare", new DriveSquare());
-		} catch (InterruptedException e) { e.printStackTrace(); }
-		autoChooser.addObject("VisionTest", new VisionTest());
+		autoChooser.addDefault("DriveSquare", new DriveSquare());
+		//autoChooser.addObject("VisionTest", new VisionTest());
 		SmartDashboard.putData("AutoChooser", autoChooser);
 		
 		prefs = Preferences.getInstance();

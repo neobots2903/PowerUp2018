@@ -18,9 +18,8 @@ public class Intake2903 extends Subsystem {
 		ArmWheelLeft = new WPI_TalonSRX(RobotMap.ArmWheelLeft);
 		ArmWheelRight = new WPI_TalonSRX(RobotMap.ArmWheelRight);
 	}
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
 	
+	//Flipped Left and Right talons
 	public void grabCube(double speed) {	
 		ArmWheelLeft.set(-speed);
 		ArmWheelRight.set(speed);

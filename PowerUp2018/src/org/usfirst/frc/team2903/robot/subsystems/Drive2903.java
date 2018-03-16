@@ -22,7 +22,7 @@ public class Drive2903 extends Subsystem
 	SpeedControllerGroup m_Left;
 	SpeedControllerGroup m_Right;
 	
-	static double maxOutput = 0.7;
+	static double maxOutput = 1.0;
 
 	public DifferentialDrive robotDrive;
 
@@ -59,7 +59,7 @@ public class Drive2903 extends Subsystem
 
 	public void arcadeDrive(double forward, double turn) 
 	{
-		robotDrive.arcadeDrive(forward, -(turn));
+		robotDrive.arcadeDrive(forward, turn);
 	}
 
 	@Override

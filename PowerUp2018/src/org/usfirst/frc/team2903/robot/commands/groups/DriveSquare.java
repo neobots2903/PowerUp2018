@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class DriveSquare extends CommandGroup {
 
-    public DriveSquare() throws InterruptedException {
-//    	addSequential(new DriveForTime(15000, -0.5));
+    public DriveSquare() {
+    	addSequential(new DriveForTime(750, -1.0)); //750
     	
-    	Robot.driveSubsystem.arcadeDrive(0.6, 0);
-    	try { Thread.sleep(5000); } catch (InterruptedException e) { e.printStackTrace(); }
-    	Robot.driveSubsystem.arcadeDrive(0, 0);
+//    	Robot.driveSubsystem.arcadeDrive(0.6, 0);
+//    	try { Thread.sleep(5000); } catch (InterruptedException e) { e.printStackTrace(); }
+//    	Robot.driveSubsystem.arcadeDrive(0, 0);
     	
 //    	addSequential(new GyroTurn(45));//switch left or right 
 //    	addSequential(new DriveForTime(5000, -0.8));
