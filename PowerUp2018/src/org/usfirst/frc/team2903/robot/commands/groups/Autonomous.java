@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2903.robot.commands.groups;
 
 import org.usfirst.frc.team2903.robot.Robot;
+import org.usfirst.frc.team2903.robot.commands.DropCubeInSwitch;
 import org.usfirst.frc.team2903.robot.commoners.*;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -15,7 +16,7 @@ public class Autonomous extends CommandGroup {
 	private int switchLocation;
 	private int stationLocation;
 	
-    public Autonomous() throws InterruptedException {
+    public Autonomous() {
     	
     	if (gameData.getGameSpecificMessage().charAt(0) == 'L') {
     		 switchLocation = 1;
@@ -32,11 +33,12 @@ public class Autonomous extends CommandGroup {
 		} else {
 			stationLocation = gameData.getLocation();
 		}
-		
-		Robot.driveSubsystem.changeToLowGear();
-		Robot.armSubsystem.closeArms();
     	
-        Thread.sleep(Robot.startDelay);
+        try {
+			Thread.sleep(Robot.startDelay);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
         
         if (Robot.doJustBaseline) { //if we're crossing the baseline...
     		doBaseline();
@@ -45,9 +47,7 @@ public class Autonomous extends CommandGroup {
 				
 			if (Robot.doSwitch) {	//and if we're doing the switch
 				addSequential(new SwitchAim(true));	//then aim to the switch
-				Robot.intakeSubsystem.throwCube(0.8);
-				Thread.sleep(500);
-				Robot.intakeSubsystem.stopArms();
+				addSequential(new DropCubeInSwitch(true));
 			}
         }
     }
@@ -60,7 +60,7 @@ public class Autonomous extends CommandGroup {
 			switch (stationLocation) {
 			case 1:
 				if (switchLocation == 1) {
-					addSequential(new DriveForTime(2000, 0.7));	//Drive straight across line.
+					addSequential(new DriveForTime(1200, 1));	//Drive straight across line.
 				} else if (switchLocation == 3) {
 					addSequential(new GyroTurn(90));	//Turn to the right
 					addSequential(new DriveForTime(2000, 0.7));	//Drive to right side
@@ -88,7 +88,7 @@ public class Autonomous extends CommandGroup {
 					addSequential(new GyroTurn(90));	//Turn to the right (straightening back out)
 					addSequential(new DriveForTime(2000, 0.7));	//Drive straight across the line
 				} else if (switchLocation == 3) {
-					addSequential(new DriveForTime(2000, 0.7));	//Drive straight across line.
+					addSequential(new DriveForTime(1200, 1));	//Drive straight across line.
 				}
 				break;
 			}

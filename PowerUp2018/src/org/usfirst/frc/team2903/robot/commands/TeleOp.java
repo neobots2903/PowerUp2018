@@ -40,6 +40,8 @@ public class TeleOp extends Command {
     	
     	double Xforward  = (Robot.xboxJoy.getRawAxis(3) - Robot.xboxJoy.getRawAxis(2))* -1;
     	double Xturn = Robot.xboxJoy.getRawAxis(0);
+    	double tankLeft = Robot.xboxJoy.getRawAxis(1);
+    	double tankRight = Robot.xboxJoy.getRawAxis(5);
 
     	if (Xforward <= 0) Xturn = -Xturn;
     	
@@ -51,12 +53,9 @@ public class TeleOp extends Command {
     	SmartDashboard.putNumber("turn", Xturn);
     	SmartDashboard.putNumber("Gyro", Robot.gyroSubsystem.gyroPosition());
     	SmartDashboard.putNumber("Acceleration ", Robot.gyroSubsystem.getAccel());
-//    	SmartDashboard.putNumber("PDP 12", pdp.getCurrent(12));
-//    	SmartDashboard.putNumber("PDP 13", pdp.getCurrent(13));
-//    	SmartDashboard.putNumber("PDP 14", pdp.getCurrent(14));
-//    	SmartDashboard.putNumber("PDP 15", pdp.getCurrent(15));
     	
     	Robot.driveSubsystem.arcadeDrive(Xforward, Xforward <= 0 ? Xturn:-Xturn);
+    	//Robot.driveSubsystem.tankDrive(tankLeft, tankRight);
     	
     	SmartDashboard.putNumber("POV", Robot.opJoy.getPOV());
     	

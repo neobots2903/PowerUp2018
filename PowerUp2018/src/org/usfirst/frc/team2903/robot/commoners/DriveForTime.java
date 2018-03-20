@@ -26,7 +26,7 @@ public class DriveForTime extends Command {
     protected void execute() {
     	long localTime = System.currentTimeMillis();
     	while (localTime + time > System.currentTimeMillis()) {
-    	Robot.driveSubsystem.arcadeDrive(speed, 0);
+    	Robot.driveSubsystem.arcadeDrive(-speed, 0);
     	}
     	Robot.driveSubsystem.arcadeDrive(0, 0);
     }

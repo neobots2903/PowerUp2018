@@ -30,7 +30,7 @@ public class Gyro2903 extends Subsystem {
 	}
 	
 	public double getAccel() {
-		return accel.getZ();
+		return accel.getY();
 	}
 	
 	public void calibrate() {

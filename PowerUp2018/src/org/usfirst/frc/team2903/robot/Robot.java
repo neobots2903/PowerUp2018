@@ -21,7 +21,12 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
+import org.usfirst.frc.team2903.robot.commands.MinimalAutonomous;
 import org.usfirst.frc.team2903.robot.commands.TeleOp;
+import org.usfirst.frc.team2903.robot.commands.groups.AutoStraightCubeLeft;
+import org.usfirst.frc.team2903.robot.commands.groups.AutoStraightCubeRight;
+import org.usfirst.frc.team2903.robot.commands.groups.Autonomous;
+import org.usfirst.frc.team2903.robot.commands.groups.DriveBaseline;
 import org.usfirst.frc.team2903.robot.commands.groups.DriveSquare;
 import org.usfirst.frc.team2903.robot.commands.groups.VisionTest;
 import org.usfirst.frc.team2903.robot.subsystems.Drive2903;
@@ -94,6 +99,15 @@ public class Robot extends IterativeRobot {
 		intakeSubsystem = new Intake2903();
 		pivotSubsystem = new Pivot2903();
 		
+		prefs = Preferences.getInstance();
+		prefs.putString("Start position", "left");
+		prefs.putBoolean("Stay on side", true);
+		prefs.putBoolean("Do just baseline", false);
+		prefs.putBoolean("Do switch", true);
+		prefs.putInt("Start Delay", 1);
+		gameData = DriverStation.getInstance();
+		updatePrefs();
+		
 		// SmartDashboard.putNumber("kP", minipidSubsystem.getP());
 		// SmartDashboard.putNumber("kI", minipidSubsystem.getI());
 		// SmartDashboard.putNumber("kD", minipidSubsystem.getD());
@@ -108,12 +122,14 @@ public class Robot extends IterativeRobot {
 		gyroSubsystem.reset();
 
 		autoChooser = new SendableChooser<Command>();
-		autoChooser.addDefault("DriveSquare", new DriveSquare());
-		//autoChooser.addObject("VisionTest", new VisionTest());
+		autoChooser.addDefault("Autonomous", new Autonomous());
+		autoChooser.addObject("AutoStraightCube-LEFT", new AutoStraightCubeLeft());
+		autoChooser.addObject("AutoStraightCube-RIGHT", new AutoStraightCubeRight());
+		autoChooser.addObject("Drive Square", new DriveSquare());
+		autoChooser.addObject("No Auto", new MinimalAutonomous());
+		autoChooser.addObject("DriveBaseline", new DriveBaseline());
+		autoChooser.addObject("VisionTest", new VisionTest());
 		SmartDashboard.putData("AutoChooser", autoChooser);
-		
-		prefs = Preferences.getInstance();
-		updatePrefs();
 		
       		teleopCommand = new TeleOp();
 			//teleopCommand = null;
@@ -124,16 +140,19 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void updatePrefs() {
-		startPosition = prefs.getString("Start position", "middle");
+		startPosition = prefs.getString("Start position", "left");
 		stayOnSide = prefs.getBoolean("Stay on side", true);
 		doJustBaseline = prefs.getBoolean("Do just baseline", false);
-		doSwitch = prefs.getBoolean("Do switch", false);
+		doSwitch = prefs.getBoolean("Do switch", true);
 		startDelay = prefs.getInt("Start Delay", 1);
 		gameData = DriverStation.getInstance();
 	}
 
 	public void autonomousInit() {
 //		// schedule the autonomous command (example)
+		driveSubsystem.changeToLowGear();
+		armSubsystem.closeArms();
+		
 		autonomousCommand = (Command) autoChooser.getSelected();
 		updatePrefs();
 		autonomousCommand.start();

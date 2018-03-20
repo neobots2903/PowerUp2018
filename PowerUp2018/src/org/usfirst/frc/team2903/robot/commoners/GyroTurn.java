@@ -3,6 +3,7 @@ package org.usfirst.frc.team2903.robot.commoners;
 import org.usfirst.frc.team2903.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -34,8 +35,8 @@ public class GyroTurn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
     	currentAngle = Robot.gyroSubsystem.gyroPosition();
+    	SmartDashboard.putNumber("Gyro", currentAngle);
 		percentComplete = Math.abs((targetAngle-currentAngle)/goal)*speedFactor;
 		
 		if (percentComplete < minSpeed) 

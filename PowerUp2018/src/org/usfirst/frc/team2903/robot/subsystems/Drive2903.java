@@ -22,7 +22,7 @@ public class Drive2903 extends Subsystem
 	SpeedControllerGroup m_Left;
 	SpeedControllerGroup m_Right;
 	
-	static double maxOutput = 1.0;
+	static double maxOutput = 0.8;
 
 	public DifferentialDrive robotDrive;
 
@@ -44,10 +44,31 @@ public class Drive2903 extends Subsystem
 		leftFrontMotor.configPeakOutputForward(maxOutput, 0);
 		leftFrontMotor.configPeakOutputReverse(-maxOutput, 0);
 		rightRearMotor.configPeakOutputForward(maxOutput, 0);
-		
 		rightRearMotor.configPeakOutputReverse(-maxOutput, 0);
 		leftRearMotor.configPeakOutputForward(maxOutput, 0);
 		leftRearMotor.configPeakOutputReverse(-maxOutput, 0);
+		
+		rightFrontMotor.configOpenloopRamp(0, 0);
+		leftFrontMotor.configOpenloopRamp(0, 0);
+		rightRearMotor.configOpenloopRamp(0, 0);
+		leftRearMotor.configOpenloopRamp(0, 0);
+		
+		rightFrontMotor.configClosedloopRamp(0, 0);
+		leftFrontMotor.configClosedloopRamp(0, 0);
+		rightRearMotor.configClosedloopRamp(0, 0);
+		leftRearMotor.configClosedloopRamp(0, 0);
+		
+		//Left and Right amp limits
+		rightFrontMotor.configContinuousCurrentLimit(10, 0);
+		rightFrontMotor.configPeakCurrentLimit(15, 0);
+		rightFrontMotor.configPeakCurrentDuration(100, 0);
+		rightFrontMotor.enableCurrentLimit(true);
+		leftFrontMotor.configContinuousCurrentLimit(10, 0);
+		leftFrontMotor.configPeakCurrentLimit(15, 0);
+		leftFrontMotor.configPeakCurrentDuration(100, 0);
+		leftFrontMotor.enableCurrentLimit(true);
+		
+		
 		
 		//rightFrontMotor.configPeakCurrentLimit(amps, timeoutMs)
 		
@@ -72,10 +93,10 @@ public class Drive2903 extends Subsystem
 	{
 		Robot.driveSubsystem.rightFrontMotor.set(ControlMode.PercentOutput,1);
 		Robot.driveSubsystem.leftFrontMotor.set(ControlMode.PercentOutput,0);
-		Robot.driveSubsystem.rightRearMotor.set(ControlMode.PercentOutput,1);
-		Robot.driveSubsystem.leftRearMotor.set(ControlMode.PercentOutput,0);
-//		Robot.driveSubsystem.rightRearMotor.set(ControlMode.Follower,RobotMap.RightTopMotor);
-//		Robot.driveSubsystem.leftRearMotor.set(ControlMode.Follower,RobotMap.LeftTopMotor);
+//		Robot.driveSubsystem.rightRearMotor.set(ControlMode.PercentOutput,1);
+//		Robot.driveSubsystem.leftRearMotor.set(ControlMode.PercentOutput,0);
+		Robot.driveSubsystem.rightRearMotor.set(ControlMode.Follower,RobotMap.RightTopMotor);
+		Robot.driveSubsystem.leftRearMotor.set(ControlMode.Follower,RobotMap.LeftTopMotor);
 	}
 	
 	public void setAutoMode()
