@@ -24,6 +24,7 @@ import org.usfirst.frc.team2903.robot.commands.TeleOp;
 import org.usfirst.frc.team2903.robot.commands.groups.DriveSquare;
 import org.usfirst.frc.team2903.robot.commands.groups.VisionTest;
 import org.usfirst.frc.team2903.robot.subsystems.Drive2903;
+import org.usfirst.frc.team2903.robot.subsystems.Drive2903_SwerveDrive;
 import org.usfirst.frc.team2903.robot.subsystems.Gyro2903;
 
 import org.usfirst.frc.team2903.robot.subsystems.Pneumatics2903;
@@ -41,6 +42,7 @@ import org.usfirst.frc.team2903.robot.subsystems.Lift2903;
 public class Robot extends IterativeRobot {
 
 	public static Drive2903 driveSubsystem;
+	public static Drive2903_SwerveDrive driveSwerveSubsystem;
 	public static Arms2903 armSubsystem;
 	public static Gyro2903 gyroSubsystem;
 	public static Pneumatics2903 pneumaticsSubsystem;
@@ -82,6 +84,7 @@ public class Robot extends IterativeRobot {
 //
 		pneumaticsSubsystem = new Pneumatics2903();
 		driveSubsystem = new Drive2903();
+		driveSwerveSubsystem = new Drive2903_SwerveDrive();
     	gyroSubsystem = new Gyro2903();
 		liftSubsystem = new Lift2903();
 		armSubsystem = new Arms2903();

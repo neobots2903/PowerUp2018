@@ -20,5 +20,6 @@ public class RobotMap
 	public static final int ArmWheelRight = 32;	//was 38
 	public static final int ArmPivot = 39;
 	public static final int LiftMotor = 37;
-
+	
+	public static final int PLACEHOLDER = 0; //this doesn't do anything; just a placeholder
 }
