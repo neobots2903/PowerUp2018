@@ -89,7 +89,7 @@ public class Drive2903_SwerveDrive extends Subsystem
 	public void arcadeDrive(double forward, double side, double turn) 
 	{
 		robotDrive.arcadeDrive(forward, -turn);
-		double rotation = Math.toDegrees(Math.atan2(forward,side)+90+Robot.gyroSubsystem.gyroPosition());
+		double rotation = Math.toDegrees(Math.atan2(forward,side))+90+Robot.gyroSubsystem.gyroPosition();
 		leftFrontSwerve.set(ControlMode.Position, rotation);
 	}
 
