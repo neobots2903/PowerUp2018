@@ -17,11 +17,24 @@ public class Autonomous extends CommandGroup {
 	private int stationLocation;
 	
     public Autonomous() {
-    	
-    	if (gameData.getGameSpecificMessage().charAt(0) == 'L') {
-    		 switchLocation = 1;
-    	} else if (gameData.getGameSpecificMessage().charAt(0) == 'R') {
-    		switchLocation = 3;
+    	try {
+//	    	while (gameData.getGameSpecificMessage().isEmpty()) {
+//	    		gameData = DriverStation.getInstance();
+//	    		try {
+//					Thread.yield(100);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//	    	}
+//	    	
+	    	if (gameData.getGameSpecificMessage().charAt(0) == 'L') {
+	    		 switchLocation = 1;
+	    	} else if (gameData.getGameSpecificMessage().charAt(0) == 'R') {
+	    		switchLocation = 3;
+	    	}
+    	} catch (Exception ex){
+    		System.out.println("Caught exception trying to read drive station data");
+    		Robot.doJustBaseline = true;
     	}
     	
 		if (Robot.startPosition.equalsIgnoreCase("left")) {
@@ -47,7 +60,7 @@ public class Autonomous extends CommandGroup {
 				
 			if (Robot.doSwitch) {	//and if we're doing the switch
 				addSequential(new SwitchAim(true));	//then aim to the switch
-				addSequential(new DropCubeInSwitch(true));
+				addSequential(new DropCubeInSwitch(true, gameData, 'L'));
 			}
         }
     }

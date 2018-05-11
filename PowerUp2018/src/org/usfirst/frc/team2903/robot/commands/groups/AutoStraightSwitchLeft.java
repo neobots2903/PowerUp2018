@@ -10,15 +10,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoStraightCubeLeft extends CommandGroup {
+public class AutoStraightSwitchLeft extends CommandGroup {
 
 	DriverStation gameData = Robot.gameData;
 	
-    public AutoStraightCubeLeft() {
-    	addSequential(new DriveForTime(1200, 1));
-    	
-    	if (Robot.gameData.getGameSpecificMessage().charAt(0) == 'L') {
-        addSequential(new DropCubeInSwitch(true));
-    	}
+    public AutoStraightSwitchLeft() {
+    	addParallel(new DriveForTime(1100, 1));
+        addParallel(new DropCubeInSwitch(true, gameData, 'L'));
     }
 }

@@ -23,8 +23,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 import org.usfirst.frc.team2903.robot.commands.MinimalAutonomous;
 import org.usfirst.frc.team2903.robot.commands.TeleOp;
-import org.usfirst.frc.team2903.robot.commands.groups.AutoStraightCubeLeft;
-import org.usfirst.frc.team2903.robot.commands.groups.AutoStraightCubeRight;
+import org.usfirst.frc.team2903.robot.commands.groups.AutoStraightScaleLeft;
+import org.usfirst.frc.team2903.robot.commands.groups.AutoStraightScaleRight;
+import org.usfirst.frc.team2903.robot.commands.groups.AutoStraightSwitchLeft;
+import org.usfirst.frc.team2903.robot.commands.groups.AutoStraightSwitchRight;
 import org.usfirst.frc.team2903.robot.commands.groups.Autonomous;
 import org.usfirst.frc.team2903.robot.commands.groups.DriveBaseline;
 import org.usfirst.frc.team2903.robot.commands.groups.DriveSquare;
@@ -122,12 +124,14 @@ public class Robot extends IterativeRobot {
 		gyroSubsystem.reset();
 
 		autoChooser = new SendableChooser<Command>();
-		autoChooser.addDefault("Autonomous", new Autonomous());
-		autoChooser.addObject("AutoStraightCube-LEFT", new AutoStraightCubeLeft());
-		autoChooser.addObject("AutoStraightCube-RIGHT", new AutoStraightCubeRight());
+		autoChooser.addDefault("DriveBaseline", new DriveBaseline());
+		autoChooser.addObject("AutoStraightSwitch-LEFT", new AutoStraightSwitchLeft());
+		autoChooser.addObject("AutoStraightSwitch-RIGHT", new AutoStraightSwitchRight());
+		autoChooser.addObject("AutoStraightSCALE-LEFT", new AutoStraightScaleLeft());
+		autoChooser.addObject("AutoStraightSCALE-RIGHT", new AutoStraightScaleRight());
 		autoChooser.addObject("Drive Square", new DriveSquare());
+		//autoChooser.addObject("Autonomous", new Autonomous());
 		autoChooser.addObject("No Auto", new MinimalAutonomous());
-		autoChooser.addObject("DriveBaseline", new DriveBaseline());
 		autoChooser.addObject("VisionTest", new VisionTest());
 		SmartDashboard.putData("AutoChooser", autoChooser);
 		
@@ -151,7 +155,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 //		// schedule the autonomous command (example)
 		driveSubsystem.changeToLowGear();
-		armSubsystem.closeArms();
+		armSubsystem.openArms();	//names are backwards; open is close
 		
 		autonomousCommand = (Command) autoChooser.getSelected();
 		updatePrefs();

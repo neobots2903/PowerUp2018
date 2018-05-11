@@ -54,8 +54,23 @@ public class TeleOp extends Command {
     	SmartDashboard.putNumber("Gyro", Robot.gyroSubsystem.gyroPosition());
     	SmartDashboard.putNumber("Acceleration ", Robot.gyroSubsystem.getAccel());
     	
-    	Robot.driveSubsystem.arcadeDrive(Xforward, Xforward <= 0 ? Xturn:-Xturn);
+    	// When we have time, here's some nice controller rumble code :P
+    	if ((Xforward < 0 && Robot.gyroSubsystem.getAccel() < 0.08) || //if going forward and not accelerating very much
+    			(Xforward > 0 && Robot.gyroSubsystem.getAccel() > -0.08)) { //if going backward and not accelerating very much
+    		Robot.xboxJoy.setRumble(RumbleType.kLeftRumble, Math.abs(Xforward));
+    		Robot.xboxJoy.setRumble(RumbleType.kRightRumble, Math.abs(Xforward));
+    	} else {
+    		Robot.xboxJoy.setRumble(RumbleType.kLeftRumble, 0);
+    		Robot.xboxJoy.setRumble(RumbleType.kRightRumble, 0);
+    	}
+    	
+    	
+    	Robot.driveSubsystem.arcadeDrive(Xforward, Xturn);
     	//Robot.driveSubsystem.tankDrive(tankLeft, tankRight);
+    	
+    	double liftUp = - Robot.opJoy.getRawAxis(3); //negative is up
+    	double liftDown = Robot.opJoy.getRawAxis(2)*0.4;	//positive is down
+    	Robot.liftSubsystem.MOVE(liftUp + liftDown);
     	
     	SmartDashboard.putNumber("POV", Robot.opJoy.getPOV());
     	
@@ -83,8 +98,6 @@ public class TeleOp extends Command {
     	} else {
     		Robot.pivotSubsystem.stopPivot();
     	}
-
-    	Robot.liftSubsystem.MOVE((Robot.opJoy.getRawAxis(2) - Robot.opJoy.getRawAxis(3))*0.8);
     	
     	if (Robot.opJoy.getPOV(0) == 0) {
     		Robot.climbSubsystem.LiftOff();

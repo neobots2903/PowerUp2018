@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveBaseline extends CommandGroup {
 
     public DriveBaseline() {
-    	addSequential(new DriveForTime(1200, 1.0)); //750
+    	addSequential(new DriveForTime(1100, 1.0)); //750
     	
 //    	Robot.driveSubsystem.arcadeDrive(0.6, 0);
 //    	try { Thread.sleep(5000); } catch (InterruptedException e) { e.printStackTrace(); }

@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DropCubeInSwitch extends Command {
+public class DropCubeInScale extends Command {
 	
-	int millisLift = 600;
+	int millisLift = 1200;
 	double speedLift = -1;
-	int millisPivot = 600;
+	int millisPivot = 300;
 	double speedPivot = -0.9;
 	int millisWheels = 500;
 	double speedWheels = 1;
@@ -21,7 +21,7 @@ public class DropCubeInSwitch extends Command {
 	private char targetSide;
 	private DriverStation gameData;
 
-    public DropCubeInSwitch(boolean _dropArms, DriverStation _gameData, char _targetSide) {
+    public DropCubeInScale(boolean _dropArms, DriverStation _gameData, char _targetSide) {
         dropArms = _dropArms;
         gameData = _gameData;
         targetSide = _targetSide;
@@ -34,7 +34,7 @@ public class DropCubeInSwitch extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	try {
-    		if (gameData.getGameSpecificMessage().charAt(0) == targetSide) {
+    		if (gameData.getGameSpecificMessage().charAt(1) == targetSide) {
 
     			startTime = System.currentTimeMillis();
 
@@ -51,11 +51,11 @@ public class DropCubeInSwitch extends Command {
     			}
     			Robot.liftSubsystem.StopLift();
 
-    			startTime = System.currentTimeMillis();
-    			while (startTime + millisWheels > System.currentTimeMillis()) {
-    				Robot.intakeSubsystem.throwCube(speedWheels);
-    			}
-    			Robot.intakeSubsystem.stopArms();
+    			//startTime = System.currentTimeMillis();
+    			//while (startTime + millisWheels > System.currentTimeMillis()) {
+    			//	Robot.intakeSubsystem.throwCube(speedWheels);
+    			//}
+    			//Robot.intakeSubsystem.stopArms();
     		}
     	}catch (Exception ex) {}
     }
