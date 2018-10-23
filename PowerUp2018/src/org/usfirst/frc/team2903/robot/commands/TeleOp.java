@@ -36,8 +36,11 @@ public class TeleOp extends Command {
     		Robot.driveSubsystem.changeToHighGear();
     	}
     	
-    	double Xforward  = Robot.xboxJoy.getRawAxis(2) - Robot.xboxJoy.getRawAxis(3);
-    	double Xturn = Robot.xboxJoy.getRawAxis(0);
+//    	double Xforward  = Robot.xboxJoy.getRawAxis(2) - Robot.xboxJoy.getRawAxis(3);
+//    	double Xturn = Robot.xboxJoy.getRawAxis(0);
+    	
+    	double Xforward  = Robot.xboxJoy.getRawAxis(1);
+    	double Xturn = Robot.xboxJoy.getRawAxis(2);
     	
     	/////////////////////////////////////////////////////////////////////////
     	/////////////////Turn inverts when driving forward///////////////////////

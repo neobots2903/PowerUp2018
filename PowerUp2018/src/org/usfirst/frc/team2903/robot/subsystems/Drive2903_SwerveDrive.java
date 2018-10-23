@@ -78,18 +78,18 @@ public class Drive2903_SwerveDrive extends Subsystem
 		
 		//all drive motors follow leftFrontDrive + rightFrontDrive, and all swerve motors follow LeftFrontSwerve
 		//all PLACEHOLDER's should be replaced with leftFrontDrive and LeftFrontSwerve
-		Robot.driveSwerveSubsystem.leftFrontSwerve.set(ControlMode.Position,2);
-		Robot.driveSwerveSubsystem.leftRearDrive.set(ControlMode.Follower,RobotMap.PLACEHOLDER);
-		Robot.driveSwerveSubsystem.leftRearSwerve.set(ControlMode.Follower,RobotMap.PLACEHOLDER);
-		Robot.driveSwerveSubsystem.rightFrontSwerve.set(ControlMode.Follower,RobotMap.PLACEHOLDER);
-		Robot.driveSwerveSubsystem.rightRearDrive.set(ControlMode.Follower,RobotMap.PLACEHOLDER);
-		Robot.driveSwerveSubsystem.rightRearSwerve.set(ControlMode.Follower,RobotMap.PLACEHOLDER);
+//		Robot.driveSwerveSubsystem.leftFrontSwerve.set(ControlMode.Position,2);
+//		Robot.driveSwerveSubsystem.leftRearDrive.set(ControlMode.Follower,RobotMap.PLACEHOLDER);
+//		Robot.driveSwerveSubsystem.leftRearSwerve.set(ControlMode.Follower,RobotMap.PLACEHOLDER);
+//		Robot.driveSwerveSubsystem.rightFrontSwerve.set(ControlMode.Follower,RobotMap.PLACEHOLDER);
+//		Robot.driveSwerveSubsystem.rightRearDrive.set(ControlMode.Follower,RobotMap.PLACEHOLDER);
+//		Robot.driveSwerveSubsystem.rightRearSwerve.set(ControlMode.Follower,RobotMap.PLACEHOLDER);
 	}
 
 	public void arcadeDrive(double forward, double side, double turn) 
 	{
 		robotDrive.arcadeDrive(forward, -turn);
-		double rotation = Math.toDegrees(Math.atan2(forward,side))+90+Robot.gyroSubsystem.gyroPosition();
+		double rotation = Math.toDegrees(Math.atan2(forward,side))+90-Robot.gyroSubsystem.gyroPosition();
 		leftFrontSwerve.set(ControlMode.Position, rotation);
 	}
 
@@ -100,14 +100,14 @@ public class Drive2903_SwerveDrive extends Subsystem
 
 	public void setTeleopMode() 
 	{
-		Robot.driveSwerveSubsystem.leftFrontDrive.set(ControlMode.PercentOutput,0);
-		Robot.driveSwerveSubsystem.rightFrontDrive.set(ControlMode.PercentOutput,1);
+//		Robot.driveSwerveSubsystem.leftFrontDrive.set(ControlMode.PercentOutput,0);
+//		Robot.driveSwerveSubsystem.rightFrontDrive.set(ControlMode.PercentOutput,1);
 	}
 	
 	public void setAutoMode()
 	{
-		Robot.driveSwerveSubsystem.leftFrontDrive.set(ControlMode.Position,0);
-		Robot.driveSwerveSubsystem.rightFrontDrive.set(ControlMode.Position,1);
+//		Robot.driveSwerveSubsystem.leftFrontDrive.set(ControlMode.Position,0);
+//		Robot.driveSwerveSubsystem.rightFrontDrive.set(ControlMode.Position,1);
 	}
 
 	public void driveReset()

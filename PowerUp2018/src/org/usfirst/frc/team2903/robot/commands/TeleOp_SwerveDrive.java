@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TeleOp_SwerveDrive extends Command {
 	
     public TeleOp_SwerveDrive() {
-    	requires(Robot.driveSwerveSubsystem);
+//    	requires(Robot.driveSwerveSubsystem);
     }
 
     // Called just before this Command runs the first time
@@ -37,7 +37,7 @@ public class TeleOp_SwerveDrive extends Command {
     	if (Xforward > 0) Xturn = -Xturn;
     	
     ///////////////////////////Main drive code///////////////////////////////
-    	Robot.driveSwerveSubsystem.arcadeDrive(Xforward, Xside, Xturn);
+//    	Robot.driveSwerveSubsystem.arcadeDrive(Xforward, Xside, Xturn);
     	
     //////////////////////SmartDashboard / Debugging/////////////////////////
     	SmartDashboard.putNumber("forward", -Xforward);

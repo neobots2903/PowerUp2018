@@ -20,6 +20,8 @@ public class Arms2903 extends Subsystem {
 		public Solenoid ArmOpen;
 		public Solenoid ArmClose;
 		private WPI_TalonSRX ArmPivot;
+		//How long the arms spin on a single button press (in milliseconds)
+		public int spinTime = 500;
 		
 		public Arms2903() {
 			// instantiate the talon motor controllers
@@ -39,7 +41,7 @@ public class Arms2903 extends Subsystem {
 
 		public void grabCube(double speed) {
 			long localTime = System.currentTimeMillis();
-			while (localTime + 1000 > System.currentTimeMillis()) {
+			while (localTime + spinTime > System.currentTimeMillis()) {
 				ArmWheelLeftB.set(-speed);
 				ArmWheelRightB.set(speed);
 			}
@@ -47,7 +49,7 @@ public class Arms2903 extends Subsystem {
 		
 		public void throwCube(double speed) {
 			long localTime = System.currentTimeMillis();
-			while (localTime + 1000 > System.currentTimeMillis()) {
+			while (localTime + spinTime > System.currentTimeMillis()) {
 				ArmWheelLeftB.set(speed);
 				ArmWheelRightB.set(-speed);
 			}
