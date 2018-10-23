@@ -11,9 +11,9 @@ public class DriveSquare extends CommandGroup {
 
     public DriveSquare() throws InterruptedException {
     	addSequential(new DriveForTime(15000, -0.5));
-//    	addSequential(new GyroTurn(45));//switch left or right 
-//    	addSequential(new DriveForTime(5000, -0.8));
-    	//Thread.sleep(10000);
+   	addSequential(new GyroTurn(45));//switch left or right 
+    	addSequential(new DriveForTime(5000, -0.8));
+    	Thread.sleep(10000);
     	
 //        addSequential(new GyroTurn(90));
 //        Thread.sleep(1000);
